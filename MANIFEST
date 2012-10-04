@@ -1,0 +1,15 @@
+Changes
+DevelopmentNotes.txt
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README.pod
+dist.ini
+lib/MooseX/Util/ClassBuilder.pm
+t/001-load.t
+t/002-pod.t
+t/003-MooseX-Util-ClassBuilder.t
+t/MooseX-Class-Builder-example.pl
+t/MooseX-Util-ClassBuilder-example.pl

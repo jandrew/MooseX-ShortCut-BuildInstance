@@ -1,0 +1,37 @@
+=head1 MooseX::Util::ClassBuilder
+
+Yet another way to build Moose Classes
+
+=head1 DESCRIPTION
+
+This module is used to compose Moose classes and instances on the fly.
+
+=head2 Further Documentation
+
+L<MooseX::Util::ClassBuilder> on CPAN
+
+=head1 Install from Source
+
+(for example git)
+
+=over
+
+=item B<1.> Download a compressed file with the code
+	
+=item B<2.> Extract the code from the compressed file
+
+=item B<3.> cd into the extracted directory
+
+=back
+
+(For Windows find what version of make was used to compile your perl)
+
+	perl  -V:make
+
+Then
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+	make clean
