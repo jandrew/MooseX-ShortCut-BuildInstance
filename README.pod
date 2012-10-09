@@ -18,11 +18,11 @@ This module is used to compose Moose instances on the fly.
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to build_class and then runs 
-$returned_class_name -&#62 new( %remaining_args );
+$returned_class_name - > new( %remaining_args );
 
 =item B<Accepts:> a hash or hashref of arguments.  They must include the 
-necessary information to build a class.  I<(if you already have a class just 
-call $class-&gt;new(); instead of this method!)> This hashref can also 
+necessary information to build a class.  I<<(if you already have a class just 
+call $class - > new(); instead of this method!)>> This hashref can also 
 contain any attribute settings for the instance as well.
 
 
