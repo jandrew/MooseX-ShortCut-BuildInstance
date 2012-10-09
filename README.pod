@@ -8,7 +8,7 @@ This module is used to compose Moose classes and instances on the fly.
 
 =head2 Further Documentation
 
-L<MooseX::Util::ClassBuilder> on CPAN
+see the L<POD|https://github.com/jandrew/MooseX-ShortCut-BuildInstance/blob/master/lib/MooseX/ShortCut/BuildInstance.pm>
 
 =head1 SYNOPSIS
     
