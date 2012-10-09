@@ -60,8 +60,6 @@ unused hash key - value pairs.  These are presumably the arguments for the
 instance.  If the requested return is a scalar it just returns the name of 
 the newly created class.
 
-=back
-
 =head2 Further Documentation
 
 see the L<source and POD|https://github.com/jandrew/MooseX-ShortCut-BuildInstance/blob/master/lib/MooseX/ShortCut/BuildInstance.pm>
