@@ -21,8 +21,8 @@ needed information to compose a new class as well.>  Basically this passes the
 $returned_class_name - > new( %remaining_args );
 
 =item B<Accepts:> a hash or hashref of arguments.  They must include the 
-necessary information to build a class.  I<<(if you already have a class just 
-call $class - > new(); instead of this method!)>> This hashref can also 
+necessary information to build a class.  I<(if you already have a class just 
+call $class -> > I<new(); instead of this method!)> This hashref can also 
 contain any attribute settings for the instance as well.
 
 
@@ -36,7 +36,7 @@ the passed attributes set.
 =over
 
 =item B<Definition:> This method is used to compose a Moose class on the fly.  
-By itself it is redundant to the L<Moose::Meta::Class> -&gt;class(%args) method.  
+By itself it is redundant to the L<Moose::Meta::Class> - > class(%args) method.  
 The use of this method is best when paired with build_instance.  This function takes the passed arguments and strips out three potential key value pairs.  It 
 then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
 one additional value here is that most key value pairs are optional!  The caveat 
