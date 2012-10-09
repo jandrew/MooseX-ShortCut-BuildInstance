@@ -1,5 +1,5 @@
 {
-   "abstract" : "Yet another way to build Moose Classes",
+   "abstract" : "A shortcut to build Moose instances",
    "author" : [
       "Jed Lund <jandrew@cpan.org>"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "MooseX-Util-ClassBuilder",
+   "name" : "MooseX-ShortCut-BuildInstance",
    "prereqs" : {
       "configure" : {
          "requires" : {
@@ -21,6 +21,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Carp" : "0",
             "Moose" : "0",
             "Moose::Exporter" : "0",
             "Moose::Meta::Class" : "0",
@@ -31,8 +32,11 @@
       },
       "test" : {
          "requires" : {
+            "Identity" : "0",
+            "Mineral" : "0",
             "Modern::Perl" : "0",
             "Moose::Role" : "0",
+            "MooseX::StrictConstructor" : "0",
             "Test::Moose" : "0",
             "Test::More" : "0",
             "Test::Most" : "0"
@@ -40,6 +44,6 @@
       }
    },
    "release_status" : "testing",
-   "version" : "v0.001_001"
+   "version" : "v0.003_001"
 }
 

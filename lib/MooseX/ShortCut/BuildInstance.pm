@@ -1,8 +1,9 @@
-package MooseX::Util::ClassBuilder;
+package MooseX::ShortCut::BuildInstance;
 use 5.010;
+use Carp;
 use Moose;
 use Moose::Meta::Class;
-use version; our $VERSION = qv('0.001_001');
+use version; our $VERSION = qv('0.003_001');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_class', 'build_instance' ],
@@ -18,6 +19,11 @@ BEGIN{
 ###############  Package Variables  #####################################################
 
 our	$instance_count //= 1;
+my 	@class_args = qw(
+		package
+		superclasses
+		roles
+	);
 
 ###############  Dispatch Tables  #######################################################
 
@@ -29,29 +35,31 @@ sub build_class{
 	### <where> - reached build_class ...
 	##### <where> - passed arguments: @_
 	my	$args = ( scalar( @_ ) == 1 ) ? $_[0] : { @_ };
-	my ( $name, $class_args );
-	if( exists $args->{class_name} ){
-		$name = $args->{class_name};
-		delete $args->{class_name};
-	}else{
-		$name = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . $instance_count++;
+	my ( $class_args, $i, $can_build );
+	for my $key ( @class_args ){
+		if( exists $args->{$key} ){
+			$class_args->{$key} = $args->{$key};
+			delete $args->{$key};
+		}
+		##### <where> - class args are: $class_args
+		### <where> - position: $i
+		### <where> - position exists: $class_args->{$key}
+		if( !$class_args->{$key} and !$i ){# package only
+			### <where> - missing a package value ...
+			$class_args->{package} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . $instance_count++;
+		}elsif( $class_args->{$key} ){
+			$can_build++;
+		}
+		$i++
 	}
-	if( exists $args->{superclasses} ){
-		$class_args->{superclasses} = $args->{superclasses};
-		delete $args->{superclasses};
-	}
-	if( exists $args->{roles} ){
-		$class_args->{roles} = $args->{roles};
-		delete $args->{roles};
+	if( !$can_build ){
+		confess "No class or role sent to build the new class!!";
 	}
 	my $want_array = ( caller(0) )[5];
-	### <where> - name: $name
 	### <where> - class args: $class_args
 	### <where> - remaining arguments: $args
 	### <where> - want array: $want_array
-	my 	$class_name =	Moose::Meta::Class->create(
-							$name, %{$class_args},
-						)->name;
+	my 	$class_name = Moose::Meta::Class->create( %{$class_args} )->name;
 	### <where> - returning the name: $class_name
 	if( $want_array ){
 		return ( $class_name, $args );
@@ -88,7 +96,7 @@ __END__
 
 =head1 NAME
 
-MooseX::Util::ClassBuilder - Yet another way to build Moose Classes
+MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 
 =head1 SYNOPSIS
     
@@ -105,17 +113,14 @@ MooseX::Util::ClassBuilder - Yet another way to build Moose Classes
 
 	has 'name' =>( is => 'ro' );
 
-	use MooseX::Util::ClassBuilder qw( build_class );
+	use MooseX::ShortCut::BuildInstance qw( build_instance );
 	use Test::More;
 	use Test::Moose;
 
-	my 	$pet_rock_class = build_class(
-			class_name => 'Pet::Rock',
+	my 	$paco = build_instance(
+			package => 'Pet::Rock',
 			superclasses =>['Mineral'],
 			roles =>['Identity'],
-		);
-
-	my 	$paco = $pet_rock_class->new(
 			type => 'Quartz',
 			name => 'Paco',
 		);
@@ -125,7 +130,7 @@ MooseX::Util::ClassBuilder - Yet another way to build Moose Classes
 	( join ', ', $paco->meta->superclasses ) . ') is called -' . $paco->name . '-';
 	done_testing();
     
-    ############################################################################
+    ##############################################################################
     #     Output of SYNOPSIS
     # 01:ok 1 - Check that the Pet::Rock has an -Identity-
     # 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
@@ -135,53 +140,20 @@ MooseX::Util::ClassBuilder - Yet another way to build Moose Classes
     
 =head1 DESCRIPTION
 
-This module is used to compose Moose classes and instances on the fly.
+This module is used to compose Moose instances on the fly.
 
 =head1 Methods
 
 =head2 Exported Methods
 
-=head3 build_class( %args|\%args )
-
-=over
-
-=item B<Definition:> This method is used to compose a Moose Class.  It will 
-take the passed arguments and strip out three potential key value pairs.  It 
-then uses the L<Moose::Meta::Class> module to build a new composed class.
-
-=item B<Accepts:> a hash or hashref of arguments.  The three key value pairs 
-use are;
-
-=over
-
-=item B<class_name> - This is the name (a string) that the new instance of 
-a this class is blessed under.  If this key is not provided the package 
-will generate a generic name.
-
-=item B<superclasses> - this is intentionally the same key from 
-L<Moose::Meta::Class>.  It expects the same values.
-
-=item B<roles> - this is intentionally the same key from L<Moose::Meta::Class>.  
-It expects the same values.
-
-=back
-
-=item B<Returns:> This will check the caller and see if it wants an array or a 
-scalar.  In array context it returns the new class name and a hash ref of the 
-unused hash key - value pairs.  These are presumably the arguments for the 
-instance.  If the requested return is a scalar it just returns the name of 
-the newly created class.
-
-=back
-
 =head3 build_instance( %args|\%args )
 
 =over
 
-=item B<Definition:> This method is used to create a Moose Class instance.  I<It 
-assumes that you do not have the class pre-built and will look for the needed 
-information to compose a new class as well.>  Basically this passes the %args 
-intact to L<build_class|/build_class( %args|\%args )> and then runs 
+=item B<Definition:> This method is used to create a Moose instance on the fly.  
+I<It assumes that you do not have the class pre-built and will look for the 
+needed information to compose a new class as well.>  Basically this passes the 
+%args intact to L<build_class|/build_class( %args|\%args )> and then runs 
 $returned_class_name->new( %remaining_args );
 
 =item B<Accepts:> a hash or hashref of arguments.  They must include the 
@@ -192,6 +164,45 @@ contain any attribute settings for the instance as well.
 
 =item B<Returns:> This will return a blessed instance of your new class with 
 the passed attributes set.
+
+=back
+
+=head3 build_class( %args|\%args )
+
+=over
+
+=item B<Definition:> This method is used to compose a Moose class on the fly.  
+By itself it is redundant to the L<Moose::Meta::Class>->class(%args) method.  
+The use of this method is best when paired with 
+L<build_instance|/build_instance( %args|\%args )>.  This function takes  
+take the passed arguments and strips out three potential key value pairs.  It 
+then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
+one additional value here is that most key value pairs are optional!  The caveat 
+being that some functionality must be passed either through a role or a class.  
+This function will handle any other missing key/value pairs not passed.
+
+=item B<Accepts:> a hash or hashref of arguments.  The three key value pairs 
+use are;
+
+=over
+
+=item B<package> - This is the name (a string) that the new instance of 
+a this class is blessed under.  If this key is not provided the package 
+will generate a generic name.
+
+=item B<superclasses> - this is intentionally the same key from 
+L<Moose::Meta::Class>.  It expects the same values. (Must be Moose classes)
+
+=item B<roles> - this is intentionally the same key from L<Moose::Meta::Class>.  
+It expects the same values. (Must be Moose roles)
+
+=back
+
+=item B<Returns:> This will check the caller and see if it wants an array or a 
+scalar.  In array context it returns the new class name and a hash ref of the 
+unused hash key - value pairs.  These are presumably the arguments for the 
+instance.  If the requested return is a scalar it just returns the name of 
+the newly created class.
 
 =back
 
@@ -213,7 +224,7 @@ in this module '### #### #####'.
 
 =over
 
-=item L<MooseX-Util-ClassBuilder/issues|https://github.com/jandrew/MooseX-Util-ClassBuilder/issues>
+=item L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCut-BuildInstance/issues>
 
 =back
 
@@ -263,7 +274,9 @@ LICENSE file included with this module.
 
 =over
 
-=item L<Moose::Util> - with_traits
+=item L<Moose::Meta::Class> ->create
+
+=item L<Moose::Util> ->with_traits
 
 =item L<MooseX::ClassCompositor>
 

@@ -9,11 +9,14 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Yet another way to build Moose Classes",
+  "ABSTRACT" => "A shortcut to build Moose instances",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {
+    "Identity" => 0,
+    "Mineral" => 0,
     "Modern::Perl" => 0,
     "Moose::Role" => 0,
+    "MooseX::StrictConstructor" => 0,
     "Test::Moose" => 0,
     "Test::More" => 0,
     "Test::Most" => 0
@@ -21,18 +24,19 @@ my %WriteMakefileArgs = (
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
   },
-  "DISTNAME" => "MooseX-Util-ClassBuilder",
+  "DISTNAME" => "MooseX-ShortCut-BuildInstance",
   "EXE_FILES" => [],
   "LICENSE" => "perl",
-  "NAME" => "MooseX::Util::ClassBuilder",
+  "NAME" => "MooseX::ShortCut::BuildInstance",
   "PREREQ_PM" => {
+    "Carp" => 0,
     "Moose" => 0,
     "Moose::Exporter" => 0,
     "Moose::Meta::Class" => 0,
     "Smart::Comments" => 0,
     "version" => 0
   },
-  "VERSION" => "v0.001_001",
+  "VERSION" => "v0.003_001",
   "test" => {
     "TESTS" => "t/*.t"
   }

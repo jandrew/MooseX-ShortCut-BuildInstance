@@ -1,7 +1,4 @@
 #!perl
-BEGIN{
-	#~ $ENV{ Smart_Comments } = '###';
-}
 use Modern::Perl;
 
 package Mineral;
@@ -15,17 +12,14 @@ use Moose::Role;
 has 'name' =>( is => 'ro' );
 
 use lib '../lib';
-use MooseX::Util::ClassBuilder qw( build_class );
+use MooseX::ShortCut::BuildInstance qw( build_instance );
 use Test::More;
 use Test::Moose;
 
-my 	$pet_rock_class = build_class(
-		class_name => 'Pet::Rock',
+my 	$paco = build_instance(
+		package => 'Pet::Rock',
 		superclasses =>['Mineral'],
 		roles =>['Identity'],
-	);
-
-my 	$paco = $pet_rock_class->new(
 		type => 'Quartz',
 		name => 'Paco',
 	);

@@ -10,6 +10,45 @@ This module is used to compose Moose classes and instances on the fly.
 
 L<MooseX::Util::ClassBuilder> on CPAN
 
+=head1 SYNOPSIS
+    
+	#!perl
+	use Modern::Perl;
+
+	package Mineral;
+	use Moose;
+
+	has 'type' =>( is => 'ro' );
+
+	package Identity;
+	use Moose::Role;
+
+	has 'name' =>( is => 'ro' );
+
+	use MooseX::ShortCut::BuildInstance qw( build_instance );
+	use Test::More;
+	use Test::Moose;
+
+	my 	$paco = build_instance(
+			package => 'Pet::Rock',
+			superclasses =>['Mineral'],
+			roles =>['Identity'],
+			type => 'Quartz',
+			name => 'Paco',
+		);
+
+	does_ok( $paco, 'Identity', 'Check that the ' . $paco->meta->name . ' has an -Identity-' );
+	say 'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
+	( join ', ', $paco->meta->superclasses ) . ') is called -' . $paco->name . '-';
+	done_testing();
+    
+#############################################################################
+#     Output of SYNOPSIS
+# 01:ok 1 - Check that the Pet::Rock has an -Identity-
+# 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
+# 03:1..1
+#############################################################################
+
 =head1 Install from Source
 
 (for example git)
