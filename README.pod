@@ -12,7 +12,7 @@ This module is used to compose Moose instances on the fly.
 
 =head3 build_instance( %args|\%args )
 
-Definition: This method is used to create a Moose instance on the fly.  
+B< Definition: > This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to build_class and then runs 
@@ -24,16 +24,12 @@ call $class -> > I<new(); instead of this method!)> This hashref can also
 contain any attribute settings for the instance as well.
 
 
-=item B<Returns: > This will return a blessed instance of your new class with 
+B< Returns: > This will return a blessed instance of your new class with 
 the passed attributes set.
-
-=back
 
 =head3 build_class( %args|\%args )
 
-=over
-
-=item B<Definition: > This method is used to compose a Moose class on the fly.  
+B< Definition: > This method is used to compose a Moose class on the fly.  
 By itself it is redundant to the L<Moose::Meta::Class> - > class(%args) method.  
 The use of this method is best when paired with build_instance.  This function takes the passed arguments and strips out three potential key value pairs.  It 
 then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
@@ -41,24 +37,24 @@ one additional value here is that most key value pairs are optional!  The caveat
 being that some functionality must be passed either through a role or a class.  
 This function will handle any other missing key/value pairs not passed.
 
-=item B<Accepts: > a hash or hashref of arguments.  The three key value pairs 
+B< Accepts: > a hash or hashref of arguments.  The three key value pairs 
 use are;
 
 =over
 
-=item B<package > - This is the name (a string) that the new instance of 
+B< package > - This is the name (a string) that the new instance of 
 a this class is blessed under.  If this key is not provided the package 
 will generate a generic name.
 
-=item B<superclasses > - this is intentionally the same key from 
+B< superclasses > - this is intentionally the same key from 
 L<Moose::Meta::Class>.  It expects the same values. (Must be Moose classes)
 
-=item B<roles > - this is intentionally the same key from L<Moose::Meta::Class>.  
+B< roles > - this is intentionally the same key from L<Moose::Meta::Class>.  
 It expects the same values. (Must be Moose roles)
 
 =back
 
-=item B<Returns: > This will check the caller and see if it wants an array or a 
+B< Returns: > This will check the caller and see if it wants an array or a 
 scalar.  In array context it returns the new class name and a hash ref of the 
 unused hash key - value pairs.  These are presumably the arguments for the 
 instance.  If the requested return is a scalar it just returns the name of 
