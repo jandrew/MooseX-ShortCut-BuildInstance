@@ -3,7 +3,7 @@ use 5.010;
 use Carp;
 use Moose;
 use Moose::Meta::Class;
-use version; our $VERSION = qv('0.003_003');
+use version; our $VERSION = qv('0.003_005');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -177,11 +177,11 @@ the passed attributes set.
 By itself it is redundant to the L<Moose::Meta::Class>->class(%args) method.  
 The use of this method is best when paired with 
 L<build_instance|/build_instance( %args|\%args )>.  This function takes  
-take the passed arguments and strips out three potential key value pairs.  It 
+the passed arguments and strips out three potential key value pairs.  It 
 then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
 one additional value here is that most key value pairs are optional!  The caveat 
-being that some functionality must be passed either through a role or a class.  
-This function will handle any other missing key/value pairs not passed.
+being that some instance functionality must be passed either through a role 
+or a class.  This function will handle any other missing key/value pairs not passed.
 
 =item B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
 to build the class.  They are never passed on to %remaining_args.>  The three key 

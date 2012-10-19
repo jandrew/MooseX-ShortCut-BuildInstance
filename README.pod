@@ -57,8 +57,7 @@ This module is a shortcut to build L<Moose> instances on the fly.
 B<Definition:> This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
-%args intact to L<build_class|/build_class( %args|\%args )> and then runs 
-$returned_class_name->new( %remaining_args );
+%args intact to B<build_class> and then runs $returned_class_name->new( %remaining_args );
 
 B<Accepts:> a hash or hashref of arguments.  They must include the 
 necessary information to build a class.  I<(if you already have a class just 
@@ -78,16 +77,10 @@ the passed attributes set.
 B<Definition:> This method is used to compose a Moose class on the fly.  
 By itself it is redundant to the L<Moose::Meta::Class>->class(%args) method.  
 The use of this method is best when paired with 
-L<build_instance|/build_instance( %args|\%args )>.  This function takes  
-take the passed arguments and strips out three potential key value pairs.  It 
-then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
-one additional value here is that most key value pairs are optional!  The caveat 
-being that some functionality must be passed either through a role or a class.  
-This function will handle any other missing key/value pairs not passed.
+B<build_instance>.  This function takes the passed arguments and strips out three potential key value pairs.  It then uses the L<Moose::Meta::Class> module to build a new composed class.  The one additional value here is that most key value pairs are optional!  The caveat being that some instance functionality must be passed either through a role or a class.  This function will handle any other missing key/value pairs not passed.
 
 B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
-to build the class.  They are never passed on to %remaining_args.>  The three key 
-value pairs use are;
+to build the class.  They are never passed on to %remaining_args.>  The three key value pairs use are;
 
 =over
 
@@ -117,11 +110,11 @@ the newly created class.
 
 =over
 
-=item B<1.> Download a compressed file with the code
+B<1.> Download a compressed file with the code
 	
-=item B<2.> Extract the code from the compressed file
+B<2.> Extract the code from the compressed file
 
-=item B<3.> cd into the extracted directory
+B<3.> cd into the extracted directory
 
 =back
 
