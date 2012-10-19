@@ -12,4 +12,4 @@ t/002-pod.t
 t/003-MooseX-ShortCut-BuildInstance.t
 t/Identity.pm
 t/Mineral.pm
-t/MooseX-ShortCut-BuildInstance-example.pl
+t/MooseX-ShortCut-BuildInstance_example.pl

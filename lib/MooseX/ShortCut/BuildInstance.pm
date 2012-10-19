@@ -3,10 +3,10 @@ use 5.010;
 use Carp;
 use Moose;
 use Moose::Meta::Class;
-use version; our $VERSION = qv('0.003_001');
+use version; our $VERSION = qv('0.003_003');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
-	as_is => [ 'build_class', 'build_instance' ],
+	as_is => [ 'build_instance', 'build_class' ],
 );
 
 BEGIN{
@@ -125,9 +125,11 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 			name => 'Paco',
 		);
 
-	does_ok( $paco, 'Identity', 'Check that the ' . $paco->meta->name . ' has an -Identity-' );
+	does_ok( $paco, 'Identity', 'Check that the ' . $paco->meta->name . 
+		' has an -Identity-' );
 	say 'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
-	( join ', ', $paco->meta->superclasses ) . ') is called -' . $paco->name . '-';
+		( join ', ', $paco->meta->superclasses ) . ') is called -' . 
+		$paco->name . '-';
 	done_testing();
     
     ##############################################################################
@@ -140,11 +142,11 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
     
 =head1 DESCRIPTION
 
-This module is used to compose Moose instances on the fly.
+This module is a shortcut to build L<Moose> instances on the fly.
 
 =head1 Methods
 
-=head2 Exported Methods
+=head2 Methods for Export
 
 =head3 build_instance( %args|\%args )
 
@@ -181,8 +183,9 @@ one additional value here is that most key value pairs are optional!  The caveat
 being that some functionality must be passed either through a role or a class.  
 This function will handle any other missing key/value pairs not passed.
 
-=item B<Accepts:> a hash or hashref of arguments.  The three key value pairs 
-use are;
+=item B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
+to build the class.  They are never passed on to %remaining_args.>  The three key 
+value pairs use are;
 
 =over
 
@@ -267,6 +270,8 @@ LICENSE file included with this module.
 =item L<Moose::Meta::Class>
 
 =item L<Moose::Exporter>
+
+=item L<Carp>
 
 =back
 
