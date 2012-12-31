@@ -21,11 +21,10 @@ meta-spec:
   version: 1.4
 name: MooseX-ShortCut-BuildInstance
 requires:
-  Carp: 0
   Moose: 0
   Moose::Exporter: 0
   Moose::Meta::Class: 0
   Smart::Comments: 0
   perl: 5.010
-  version: 0
-version: v0.003_003
+  version: 0.94
+version: v0.005_003

@@ -29,14 +29,13 @@ my %WriteMakefileArgs = (
   "LICENSE" => "perl",
   "NAME" => "MooseX::ShortCut::BuildInstance",
   "PREREQ_PM" => {
-    "Carp" => 0,
     "Moose" => 0,
     "Moose::Exporter" => 0,
     "Moose::Meta::Class" => 0,
     "Smart::Comments" => 0,
-    "version" => 0
+    "version" => "0.94"
   },
-  "VERSION" => "v0.003_003",
+  "VERSION" => "v0.005_003",
   "test" => {
     "TESTS" => "t/*.t"
   }

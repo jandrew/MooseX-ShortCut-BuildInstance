@@ -1,22 +1,19 @@
 package MooseX::ShortCut::BuildInstance;
 use 5.010;
-use Carp;
 use Moose;
 use Moose::Meta::Class;
-use version; our $VERSION = qv('0.003_005');
+use version 0.94; our $VERSION = qv('0.005_003');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
 );
 
-BEGIN{
-	if( $ENV{ Smart_Comments } ){
-		use Smart::Comments -ENV;
-		### Smart-Comments turned on for MooseX-Util-ClassBuilder ...
-	}
+if( $ENV{ Smart_Comments } ){
+	use Smart::Comments -ENV;
+	### Smart-Comments turned on for MooseX-Util-ClassBuilder ...
 }
 
-###############  Package Variables  #####################################################
+#########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
 our	$instance_count //= 1;
 my 	@class_args = qw(
@@ -25,11 +22,7 @@ my 	@class_args = qw(
 		roles
 	);
 
-###############  Dispatch Tables  #######################################################
-
-###############  Public Attributes  #####################################################
-
-###############  Public Methods  ########################################################
+#########1 Public Methods     3#########4#########5#########6#########7#########8#########9
 
 sub build_class{
 	### <where> - reached build_class ...
@@ -69,7 +62,7 @@ sub build_class{
 }
 
 sub build_instance{
-	my	$args = { @_ };
+	my	$args = ( ref $_[0] eq 'HASH' ) ? $_[0] : { @_ };
 	### <where> - reached build_instance ...
 	##### <where> - passed arguments: $args
 	my ( $class_name, $instance_args ) = build_class( $args );
@@ -78,11 +71,7 @@ sub build_instance{
 	return $instance;
 }
 
-###############  Private Attributes  ####################################################
-
-###############  Private Methods / Modifiers  ###########################################
-
-#################### Phinish with a Phlourish ###########################################
+#########1 Phinish strong     3#########4#########5#########6#########7#########8#########9
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
@@ -90,7 +79,7 @@ __PACKAGE__->meta->make_immutable;
 1;
 # The preceding line will help the module return a true value
 
-#################### main pod documentation begin #######################################
+#########1 main pod docs      3#########4#########5#########6#########7#########8#########9
 
 __END__
 
@@ -174,14 +163,13 @@ the passed attributes set.
 =over
 
 =item B<Definition:> This method is used to compose a Moose class on the fly.  
-By itself it is redundant to the L<Moose::Meta::Class>->class(%args) method.  
-The use of this method is best when paired with 
-L<build_instance|/build_instance( %args|\%args )>.  This function takes  
-the passed arguments and strips out three potential key value pairs.  It 
-then uses the L<Moose::Meta::Class> module to build a new composed class.  The 
-one additional value here is that most key value pairs are optional!  The caveat 
-being that some instance functionality must be passed either through a role 
-or a class.  This function will handle any other missing key/value pairs not passed.
+By itself it is (mostly) redundant to the L<Moose::Meta::Class>->class(%args) 
+method.  This function takes the passed arguments and strips out three potential 
+key value pairs.  It then uses the L<Moose::Meta::Class> module to build a new 
+composed class.  The one additional value of this method over Moose::Meta::Class 
+is that most key value pairs are optional!  The caveat being that some instance 
+functionality must be passed either through a role or a class.  This function 
+will handle any other missing key/value pairs not passed.
 
 =item B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
 to build the class.  They are never passed on to %remaining_args.>  The three key 
@@ -194,16 +182,16 @@ a this class is blessed under.  If this key is not provided the package
 will generate a generic name.
 
 =item B<superclasses> - this is intentionally the same key from 
-L<Moose::Meta::Class>.  It expects the same values. (Must be Moose classes)
+Moose::Meta::Class.  It expects the same values. (Must be Moose classes)
 
-=item B<roles> - this is intentionally the same key from L<Moose::Meta::Class>.  
+=item B<roles> - this is intentionally the same key from Moose::Meta::Class.  
 It expects the same values. (Must be Moose roles)
 
 =back
 
 =item B<Returns:> This will check the caller and see if it wants an array or a 
 scalar.  In array context it returns the new class name and a hash ref of the 
-unused hash key - value pairs.  These are presumably the arguments for the 
+unused hash key/value pairs.  These are presumably the arguments for the 
 instance.  If the requested return is a scalar it just returns the name of 
 the newly created class.
 
@@ -216,7 +204,7 @@ the newly created class.
 =item B<$ENV{Smart_Comments}>
 
 The module uses L<Smart::Comments> if the '-ENV' option is set.  The 'use' is 
-encapsulated in a BEGIN block triggered by the environmental variable to comfort 
+encapsulated in an 'if' block triggered by the environmental variable to comfort 
 non-believers.  Setting the variable $ENV{Smart_Comments} will load and turn 
 on smart comment reporting.  There are three levels of 'Smartness' available 
 in this module '### #### #####'.
@@ -270,8 +258,6 @@ LICENSE file included with this module.
 =item L<Moose::Meta::Class>
 
 =item L<Moose::Exporter>
-
-=item L<Carp>
 
 =back
 

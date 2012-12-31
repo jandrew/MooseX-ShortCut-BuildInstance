@@ -18,8 +18,7 @@ explain <t/*>;
 use lib '../lib', 'lib', 't';
 use Mineral;
 use Identity;
-use MooseX::ShortCut::BuildInstance 0.003
-		qw( build_class build_instance );
+use MooseX::ShortCut::BuildInstance 0.005;
 my( 
 			$pet_rock_class, $paco, $pacos_twin, $anonymous_class, $anonymous_instance,
 );
