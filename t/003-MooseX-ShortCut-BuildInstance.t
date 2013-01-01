@@ -14,7 +14,6 @@ if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;#'###'
 	### Smart-Comments turned on for the Data-Walk-Print test ...
 }
-explain <t/*>;
 use lib '../lib', 'lib', 't';
 use Mineral;
 use Identity;
