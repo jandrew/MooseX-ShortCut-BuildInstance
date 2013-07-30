@@ -1,7 +1,5 @@
 =head1 MooseX::ShortCut::BuildInstance
 
-=head1 DESCRIPTION
-
 This module is a shortcut to build 
 L<Moose|https://metacpan.org/module/Moose::Manual> instances on the fly.
 
@@ -46,6 +44,16 @@ L<Moose|https://metacpan.org/module/Moose::Manual> instances on the fly.
 	# 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
 	# 03:1..1
 	############################################################################
+
+=head1 Description
+
+This module is a shortcut to build L<Moose> class instances on the fly.  The 
+goal is to compose unique instances of Moose classes on the fly using roles in a 
+L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
+In other words this module accepts all the Moose class building goodness 
+along with any roles requested, and any arguments required for a custom 
+class instance and checks / fills in missing pieces as needed without stringing 
+together a series of Class-E<gt>method( %args ) calls.
 
 =head1 Methods
 

@@ -1,8 +1,15 @@
+##### pre-package
+package Anonymous::Shiras::Moose::Class;
+use Moose;
+no Moose;
+__PACKAGE__->meta->make_immutable;
+
+##### main package
 package MooseX::ShortCut::BuildInstance;
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
-use version 0.94; our $VERSION = qv('0.005_003');
+use version 0.94; our $VERSION = qv('0.007_003');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -30,29 +37,25 @@ sub build_class{
 	my	$args = ( scalar( @_ ) == 1 ) ? $_[0] : { @_ };
 	my ( $class_args, $i, $can_build );
 	for my $key ( @class_args ){
+		### <where> - processing the class argument: $key
 		if( exists $args->{$key} ){
 			$class_args->{$key} = $args->{$key};
 			delete $args->{$key};
-		}
-		##### <where> - class args are: $class_args
-		### <where> - position: $i
-		### <where> - position exists: $class_args->{$key}
-		if( !$class_args->{$key} and !$i ){# package only
+		}elsif( $key eq 'package' ){
 			### <where> - missing a package value ...
-			$class_args->{package} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . $instance_count++;
-		}elsif( $class_args->{$key} ){
-			$can_build++;
+			$class_args->{$key} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . $instance_count++;
+		}elsif( $key eq 'superclasses' ){
+			### <where> - missing the superclass ...
+			$class_args->{$key} = [ 'Anonymous::Shiras::Moose::Class' ],
 		}
-		$i++
-	}
-	if( !$can_build ){
-		confess "No class or role sent to build the new class!!";
 	}
 	my $want_array = ( caller(0) )[5];
 	### <where> - class args: $class_args
 	### <where> - remaining arguments: $args
 	### <where> - want array: $want_array
-	my 	$class_name = Moose::Meta::Class->create( %{$class_args} )->name;
+	my	$class_name = Moose::Meta::Class->create( %{$class_args} )->name;
+	### <where> - class to this point: $class_name->dump( 2 )
+	#~ my 	$class_name = $class_name->name;
 	### <where> - returning the name: $class_name
 	if( $want_array ){
 		return ( $class_name, $args );
@@ -65,8 +68,8 @@ sub build_instance{
 	my	$args = ( ref $_[0] eq 'HASH' ) ? $_[0] : { @_ };
 	### <where> - reached build_instance ...
 	##### <where> - passed arguments: $args
-	my ( $class_name, $instance_args ) = build_class( $args );
-	my	$instance = $class_name->new( $instance_args );
+	my ( $class, $instance_args ) = build_class( $args );
+	my	$instance = $class->new( $instance_args );
 	##### <where> - instance: $instance
 	return $instance;
 }
@@ -90,8 +93,6 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 =head1 SYNOPSIS
     
 	#!perl
-	use Modern::Perl;
-
 	package Mineral;
 	use Moose;
 
@@ -118,7 +119,7 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 		' has an -Identity-' );
 	say 'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
 		( join ', ', $paco->meta->superclasses ) . ') is called -' . 
-		$paco->name . '-';
+		$paco->name . "-\n";
 	done_testing();
     
     ##############################################################################
@@ -131,7 +132,13 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
     
 =head1 DESCRIPTION
 
-This module is a shortcut to build L<Moose> instances on the fly.
+This module is a shortcut to build L<Moose> class instances on the fly.  The 
+goal is to compose unique instances of Moose classes on the fly using roles in a 
+L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
+In other words this module accepts all the Moose class building goodness 
+along with any roles requested, and any arguments required for a custom 
+class instance and checks / fills in missing pieces as needed without stringing 
+together a series of Class-E<gt>method( %args ) calls.
 
 =head1 Methods
 

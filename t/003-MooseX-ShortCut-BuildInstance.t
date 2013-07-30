@@ -125,9 +125,7 @@ ok			$pet_rock_class->isa( 'Mineral'),
 										"Check that the class does have a 'Mineral' superclass";
 ok			$pet_rock_class->can( 'type_of_mineral' ),
 										"Test that there is a 'type_of_mineral'";
-dies_ok{ 	$anonymous_instance = build_instance() }
-										"Attempt an anonymous instance (without any superclass or role) - should fail";
-like		$@, qr/No class or role sent to build the new class!!/,
-										"... and check the failure error message";
+lives_ok{ 	$anonymous_instance = build_instance() }
+										"Attempt an anonymous instance (without any superclass or role)";
 explain 								"...Test Done";
 done_testing();
