@@ -96,14 +96,14 @@ value pairs use are;
 
 =over
 
-=item - package: This is the name (a string) that the new instance of 
+B<package:> This is the name (a string) that the new instance of 
 a this class is blessed under.  If this key is not provided the package 
 will generate a generic name.
 
-=item - superclasses: this is intentionally the same key from 
+B<superclasses:> this is intentionally the same key from 
 Moose::Meta::Class.  It expects the same values. (Must be Moose classes)
 
-=item - roles: this is intentionally the same key from Moose::Meta::Class.  
+B<roles:> this is intentionally the same key from Moose::Meta::Class.  
 It expects the same values. (Must be Moose roles)
 
 =back
