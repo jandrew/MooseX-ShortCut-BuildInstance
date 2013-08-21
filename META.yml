@@ -25,4 +25,4 @@ requires:
   Smart::Comments: 0
   perl: 5.010
   version: 0.94
-version: 0.008.001
+version: 0.008.007

@@ -3,7 +3,7 @@ package MooseX::ShortCut::BuildInstance;
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
-use version 0.94; our $VERSION = qv('0.008.005');
+use version 0.94; our $VERSION = qv('0.008.007');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -258,15 +258,15 @@ LICENSE file included with this module.
 
 =over
 
-=item L<version>
+L<version>
 
-=item L<5.010> - use of defined or
+L<5.010> - use of defined or
 
-=item L<Moose>
+L<Moose>
 
-=item L<Moose::Meta::Class>
+L<Moose::Meta::Class>
 
-=item L<Moose::Exporter>
+L<Moose::Exporter>
 
 =back
 
@@ -274,13 +274,13 @@ LICENSE file included with this module.
 
 =over
 
-=item L<Moose::Meta::Class> ->create
+L<Moose::Meta::Class> ->create
 
-=item L<Moose::Util> ->with_traits
+L<Moose::Util> ->with_traits
 
-=item L<MooseX::ClassCompositor>
+L<MooseX::ClassCompositor>
 
-=item L<Smart::Comments> - is used if the -ENV option is set
+L<Smart::Comments> - is used if the -ENV option is set
 
 =back
 
