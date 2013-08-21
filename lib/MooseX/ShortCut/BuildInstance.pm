@@ -1,15 +1,9 @@
-##### pre-package
-package Anonymous::Shiras::Moose::Class;
-use Moose;
-no Moose;
-__PACKAGE__->meta->make_immutable;
-
 ##### main package
 package MooseX::ShortCut::BuildInstance;
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
-use version 0.94; our $VERSION = qv('0.007_003');
+use version 0.94; our $VERSION = qv('0.008.001');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -79,6 +73,12 @@ sub build_instance{
 no Moose;
 __PACKAGE__->meta->make_immutable;
 
+##### default package
+package Anonymous::Shiras::Moose::Class;
+use Moose;
+no Moose;
+__PACKAGE__->meta->make_immutable;
+
 1;
 # The preceding line will help the module return a true value
 
@@ -132,9 +132,9 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
     
 =head1 DESCRIPTION
 
-This module is a shortcut to build L<Moose> class instances on the fly.  The 
-goal is to compose unique instances of Moose classes on the fly using roles in a 
-L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
+This module is a shortcut to custom build L<Moose> class instances on the fly.  
+The goal is to compose unique instances of Moose classes on the fly using roles 
+in a L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
 In other words this module accepts all the Moose class building goodness 
 along with any roles requested, and any arguments required for a custom 
 class instance and checks / fills in missing pieces as needed without stringing 
@@ -231,6 +231,8 @@ in this module '### #### #####'.
 =over
 
 =item * Add a type package to manage the inputs to the exported methods
+
+=item * Swap L<Smart::Comments> for L<Log::Shiras>
 
 =back
 

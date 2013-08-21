@@ -6,8 +6,6 @@ L<Moose|https://metacpan.org/module/Moose::Manual> instances on the fly.
 =head1 SYNOPSIS
     
 	#!perl
-	use Modern::Perl;
-
 	package Mineral;
 	use Moose;
 
@@ -34,22 +32,21 @@ L<Moose|https://metacpan.org/module/Moose::Manual> instances on the fly.
 		' has an -Identity-' );
 	say 'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
 		( join ', ', $paco->meta->superclasses ) . ') is called -' . 
-		$paco->name . '-';
+		$paco->name . "-\n";
 	done_testing();
     
-    	
-	############################################################################
-	#     Output of SYNOPSIS
-	# 01:ok 1 - Check that the Pet::Rock has an -Identity-
-	# 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
-	# 03:1..1
-	############################################################################
+    ##############################################################################
+    #     Output of SYNOPSIS
+    # 01:ok 1 - Check that the Pet::Rock has an -Identity-
+    # 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
+    # 03:1..1
+    ##############################################################################
 
 =head1 Description
 
-This module is a shortcut to build L<Moose> class instances on the fly.  The 
-goal is to compose unique instances of Moose classes on the fly using roles in a 
-L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
+This module is a shortcut to custom build L<Moose> class instances on the fly.  
+The goal is to compose unique instances of Moose classes on the fly using roles 
+in a L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
 In other words this module accepts all the Moose class building goodness 
 along with any roles requested, and any arguments required for a custom 
 class instance and checks / fills in missing pieces as needed without stringing 
@@ -63,19 +60,20 @@ together a series of Class-E<gt>method( %args ) calls.
 
 =over
 
-B<Definition:> This method is used to create a Moose instance on the fly.  
+=item B<Definition:> This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
-needed information to compose a new class as well.>  Basically this passes 
-the %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
-$returned_class_name-E<gt>new( %remaining_args );
+needed information to compose a new class as well.>  Basically this passes the 
+%args intact to L<build_class|/build_class( %args|\%args )> and then runs 
+$returned_class_name->new( %remaining_args );
 
-B<Accepts:> a hash or hashref of arguments.  They must include the necessary 
-information to build a class.  I<(if you already have a class just call 
-$class-E<gt>new(); instead of this method!)> This hashref can also contain 
-any attribute settings for the instance as well.
+=item B<Accepts:> a hash or hashref of arguments.  They must include the 
+necessary information to build a class.  I<(if you already have a class just 
+call $class-E<gt>new(); instead of this method!)> This hashref can also 
+contain any attribute settings for the instance as well.
 
-B<Returns:> This will return a blessed instance of your new class with the 
-passed attributes set.
+
+=item B<Returns:> This will return a blessed instance of your new class with 
+the passed attributes set.
 
 =back
 
@@ -83,37 +81,36 @@ passed attributes set.
 
 =over
 
-B<Definition:> This method is used to compose a Moose class on the fly.  
-By itself it is redundant to the 
-L<Moose::Meta::Class|https://metacpan.org/module/Moose::Meta::Class>-E<gt>class(%args) 
-method.  The use of this method is best when paired with 
-L<build_instance|/build_instance( %args|\%args )>.  This function takes the passed 
-arguments and strips out three potential key value pairs.  It then uses the 
-Moose::Meta::Class module to build a new composed class.  The one additional value 
-here is that most key value pairs are optional!  The caveat being that some instance 
-functionality must be passed either through a role or a class.  This function will 
-handle any other missing key/value pairs not passed.
+=item B<Definition:> This method is used to compose a Moose class on the fly.  
+By itself it is (mostly) redundant to the L<Moose::Meta::Class>->class(%args) 
+method.  This function takes the passed arguments and strips out three potential 
+key value pairs.  It then uses the L<Moose::Meta::Class> module to build a new 
+composed class.  The one additional value of this method over Moose::Meta::Class 
+is that most key value pairs are optional!  The caveat being that some instance 
+functionality must be passed either through a role or a class.  This function 
+will handle any other missing key/value pairs not passed.
 
-B<Accepts:> a hash or hashref of arguments.  This method checks for the keys needed 
-to build a class.  I<The following keys are always used to build the class.  They 
-are never passed on to %remaining_args.>;
+=item B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
+to build the class.  They are never passed on to %remaining_args.>  The three key 
+value pairs use are;
 
 =over
 
-B<package> - This is the name (a string) that the new instance of a this class is 
-blessed under.  If this key is not provided the package will generate a generic name.
+=item B<package> - This is the name (a string) that the new instance of 
+a this class is blessed under.  If this key is not provided the package 
+will generate a generic name.
 
-B<superclasses> - this is intentionally the same key from 
+=item B<superclasses> - this is intentionally the same key from 
 Moose::Meta::Class.  It expects the same values. (Must be Moose classes)
 
-B<roles> - this is intentionally the same key from Moose::Meta::Class.  
+=item B<roles> - this is intentionally the same key from Moose::Meta::Class.  
 It expects the same values. (Must be Moose roles)
 
 =back
 
-B<Returns:> This will check the caller and see if it wants an array or a 
+=item B<Returns:> This will check the caller and see if it wants an array or a 
 scalar.  In array context it returns the new class name and a hash ref of the 
-unused hash key - value pairs.  These are presumably the arguments for the 
+unused hash key/value pairs.  These are presumably the arguments for the 
 instance.  If the requested return is a scalar it just returns the name of 
 the newly created class.
 

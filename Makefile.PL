@@ -12,8 +12,6 @@ my %WriteMakefileArgs = (
   "ABSTRACT" => "A shortcut to build Moose instances",
   "AUTHOR" => "Jed Lund <jandrew\@cpan.org>",
   "BUILD_REQUIRES" => {
-    "Identity" => 0,
-    "Mineral" => 0,
     "Modern::Perl" => 0,
     "Moose::Role" => 0,
     "MooseX::StrictConstructor" => 0,
@@ -35,7 +33,7 @@ my %WriteMakefileArgs = (
     "Smart::Comments" => 0,
     "version" => "0.94"
   },
-  "VERSION" => "v0.007_003",
+  "VERSION" => "0.008.001",
   "test" => {
     "TESTS" => "t/*.t"
   }

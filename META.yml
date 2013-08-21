@@ -3,8 +3,6 @@ abstract: 'A shortcut to build Moose instances'
 author:
   - 'Jed Lund <jandrew@cpan.org>'
 build_requires:
-  Identity: 0
-  Mineral: 0
   Modern::Perl: 0
   Moose::Role: 0
   MooseX::StrictConstructor: 0
@@ -27,4 +25,4 @@ requires:
   Smart::Comments: 0
   perl: 5.010
   version: 0.94
-version: v0.007_003
+version: 0.008.001

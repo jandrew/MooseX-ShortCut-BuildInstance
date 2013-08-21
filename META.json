@@ -31,8 +31,6 @@
       },
       "test" : {
          "requires" : {
-            "Identity" : "0",
-            "Mineral" : "0",
             "Modern::Perl" : "0",
             "Moose::Role" : "0",
             "MooseX::StrictConstructor" : "0",
@@ -42,7 +40,7 @@
          }
       }
    },
-   "release_status" : "testing",
-   "version" : "v0.007_003"
+   "release_status" : "stable",
+   "version" : "0.008.001"
 }
 

@@ -1,8 +1,8 @@
 #!perl
 #######  Test File for MooseX::ShortCut::BuildInstance  #######
-BEGIN{
+#~ BEGIN{
 	#~ $ENV{ Smart_Comments } = '### #### #####';
-}
+#~ }
 
 use Modern::Perl;
 
@@ -15,9 +15,7 @@ if( $ENV{ Smart_Comments } ){
 	### Smart-Comments turned on for the Data-Walk-Print test ...
 }
 use lib '../lib', 'lib', 't';
-use Mineral;
-use Identity;
-use MooseX::ShortCut::BuildInstance 0.005;
+use MooseX::ShortCut::BuildInstance 0.008;
 my( 
 			$pet_rock_class, $paco, $pacos_twin, $anonymous_class, $anonymous_instance,
 );
