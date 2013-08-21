@@ -148,7 +148,7 @@ together a series of Class-E<gt>method( %args ) calls.
 
 =over
 
-=item B<Definition> This method is used to create a Moose instance on the fly.  
+=item - B<Definition> This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
