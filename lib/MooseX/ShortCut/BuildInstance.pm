@@ -3,7 +3,7 @@ package MooseX::ShortCut::BuildInstance;
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
-use version 0.94; our $VERSION = qv('0.008.003');
+use version 0.94; our $VERSION = qv('0.008.005');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -148,19 +148,19 @@ together a series of Class-E<gt>method( %args ) calls.
 
 =over
 
-=item - B<Definition> This method is used to create a Moose instance on the fly.  
+=item * Definition: This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
 $returned_class_name->new( %remaining_args );
 
-=item - B<Accepts:> a hash or hashref of arguments.  They must include the 
+=item * Accepts: a hash or hashref of arguments.  They must include the 
 necessary information to build a class.  I<(if you already have a class just 
 call $class-E<gt>new(); instead of this method!)> This hashref can also 
 contain any attribute settings for the instance as well.
 
 
-=item - B<Returns:> This will return a blessed instance of your new class with 
+=item * Returns: This will return a blessed instance of your new class with 
 the passed attributes set.
 
 =back
@@ -169,7 +169,7 @@ the passed attributes set.
 
 =over
 
-=item B<Definition:> This method is used to compose a Moose class on the fly.  
+=item * Definition: This method is used to compose a Moose class on the fly.  
 By itself it is (mostly) redundant to the L<Moose::Meta::Class>->class(%args) 
 method.  This function takes the passed arguments and strips out three potential 
 key value pairs.  It then uses the L<Moose::Meta::Class> module to build a new 
@@ -178,25 +178,25 @@ is that most key value pairs are optional!  The caveat being that some instance
 functionality must be passed either through a role or a class.  This function 
 will handle any other missing key/value pairs not passed.
 
-=item B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
+=item * Accepts: a hash or hashref of arguments.  I<These keys are always used 
 to build the class.  They are never passed on to %remaining_args.>  The three key 
 value pairs use are;
 
 =over
 
-=item B<package> - This is the name (a string) that the new instance of 
+=item - package: This is the name (a string) that the new instance of 
 a this class is blessed under.  If this key is not provided the package 
 will generate a generic name.
 
-=item B<superclasses> - this is intentionally the same key from 
+=item - superclasses: this is intentionally the same key from 
 Moose::Meta::Class.  It expects the same values. (Must be Moose classes)
 
-=item B<roles> - this is intentionally the same key from Moose::Meta::Class.  
+=item - roles: this is intentionally the same key from Moose::Meta::Class.  
 It expects the same values. (Must be Moose roles)
 
 =back
 
-=item B<Returns:> This will check the caller and see if it wants an array or a 
+=item * Returns: This will check the caller and see if it wants an array or a 
 scalar.  In array context it returns the new class name and a hash ref of the 
 unused hash key/value pairs.  These are presumably the arguments for the 
 instance.  If the requested return is a scalar it just returns the name of 
