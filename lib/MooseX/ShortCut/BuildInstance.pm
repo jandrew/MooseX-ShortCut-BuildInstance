@@ -3,7 +3,7 @@ package MooseX::ShortCut::BuildInstance;
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
-use version 0.94; our $VERSION = qv('0.008.001');
+use version 0.94; our $VERSION = qv('0.008.003');
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
 	as_is => [ 'build_instance', 'build_class' ],
@@ -148,7 +148,7 @@ together a series of Class-E<gt>method( %args ) calls.
 
 =over
 
-=item B<Definition:> This method is used to create a Moose instance on the fly.  
+=item B<Definition> This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
