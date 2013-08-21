@@ -154,13 +154,13 @@ needed information to compose a new class as well.>  Basically this passes the
 %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
 $returned_class_name->new( %remaining_args );
 
-=item B<Accepts:> a hash or hashref of arguments.  They must include the 
+=item - B<Accepts:> a hash or hashref of arguments.  They must include the 
 necessary information to build a class.  I<(if you already have a class just 
 call $class-E<gt>new(); instead of this method!)> This hashref can also 
 contain any attribute settings for the instance as well.
 
 
-=item B<Returns:> This will return a blessed instance of your new class with 
+=item - B<Returns:> This will return a blessed instance of your new class with 
 the passed attributes set.
 
 =back
