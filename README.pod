@@ -60,13 +60,13 @@ together a series of Class-E<gt>method( %args ) calls.
 
 =over
 
-=item - B<Definition:> This method is used to create a Moose instance on the fly.  
+=item B< Definition > This method is used to create a Moose instance on the fly.  
 I<It assumes that you do not have the class pre-built and will look for the 
 needed information to compose a new class as well.>  Basically this passes the 
 %args intact to L<build_class|/build_class( %args|\%args )> and then runs 
 $returned_class_name->new( %remaining_args );
 
-=item - B<Accepts:> a hash or hashref of arguments.  They must include the 
+=item - B< Accepts: > a hash or hashref of arguments.  They must include the 
 necessary information to build a class.  I<(if you already have a class just 
 call $class-E<gt>new(); instead of this method!)> This hashref can also 
 contain any attribute settings for the instance as well.
