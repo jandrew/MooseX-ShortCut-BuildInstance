@@ -23,10 +23,10 @@ name: MooseX-ShortCut-BuildInstance
 provides:
   Anonymous::Shiras::Moose::Class:
     file: lib/MooseX/ShortCut/BuildInstance.pm
-    version: v0.12.4
+    version: v0.14.2
   MooseX::ShortCut::BuildInstance:
     file: lib/MooseX/ShortCut/BuildInstance.pm
-    version: v0.12.4
+    version: v0.14.2
 requires:
   Carp: 0
   Data::Dumper: 0
@@ -42,4 +42,4 @@ resources:
   bugtracker: https://github.com/jandrew/MooseX-ShortCut-BuildInstance/issues
   homepage: https://github.com/jandrew
   repository: git://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance.git
-version: v0.012.004
+version: v0.014.002

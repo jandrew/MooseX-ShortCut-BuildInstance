@@ -1,6 +1,6 @@
 ##### main package
 package MooseX::ShortCut::BuildInstance;
-use version 0.94; our $VERSION = qv('v0.012.004');
+use version 0.94; our $VERSION = qv('v0.014.002');
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -100,7 +100,7 @@ sub build_instance{
 sub should_re_use_classes{
 	my ( $bool, ) = @_;
 	### <where> - setting re_use_classes to; $bool
-	$re_use_classes = $bool;
+	$re_use_classes = ( $bool ) ? 1 : 0 ;
 }
 
 #########1 Phinish strong     3#########4#########5#########6#########7#########8#########9

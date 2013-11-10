@@ -49,11 +49,11 @@
    "provides" : {
       "Anonymous::Shiras::Moose::Class" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v0.12.4"
+         "version" : "v0.14.2"
       },
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v0.12.4"
+         "version" : "v0.14.2"
       }
    },
    "release_status" : "stable",
@@ -68,6 +68,6 @@
          "web" : "https://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v0.012.004"
+   "version" : "v0.014.002"
 }
 
