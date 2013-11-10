@@ -166,17 +166,17 @@ triggered by the environmental variable to comfort non-believers.  Setting the
 variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
 There are three levels of 'Smartness' available in this module '### #### #####'.
 
-=head4 MooseX::ShortCut::BuildInstance::instance_count
+=head4 $MooseX::ShortCut::BuildInstance::instance_count
 
 This is an integer that increments and appends to the anonymous package name 
 for each new anonymous package created.
 
-=head4 MooseX::ShortCut::BuildInstance::built_classes
+=head4 $MooseX::ShortCut::BuildInstance::built_classes
 
 This is a hashref that tracks the class names ('package's) built buy this class 
 to manage duplicate build behaviour.
 
-=head4 MooseX::ShortCut::BuildInstance::re_use_classes
+=head4 $MooseX::ShortCut::BuildInstance::re_use_classes
 
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
