@@ -13,3 +13,4 @@ t/003-MooseX-ShortCut-BuildInstance.t
 t/Identity.pm
 t/Mineral.pm
 t/MooseX-ShortCut-BuildInstance_example.pl
+t/Vegetable.pm
