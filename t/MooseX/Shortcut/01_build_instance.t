@@ -1,24 +1,25 @@
+#########1 Test File for MooseX::ShortCut::BuildInstance    6#########7#########8#########9
 #!perl
-#######  Test File for MooseX::ShortCut::BuildInstance  #######
 #~ BEGIN{
 	#~ $ENV{ Smart_Comments } = '### #### #####';
 #~ }
-
-use Modern::Perl;
-
-package main;
+#~ if( $ENV{ Smart_Comments } ){
+	#~ use Smart::Comments -ENV;
+	#~ ### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
+#~ }
 
 use Test::Most;
 use Test::Moose;
-if( $ENV{ Smart_Comments } ){
-	use Smart::Comments -ENV;#'###'
-	### Smart-Comments turned on for the Data-Walk-Print test ...
-}
 use Capture::Tiny 0.12 qw(
-	capture_stderr
-);
-use lib '../lib', 'lib', 't';
-use MooseX::ShortCut::BuildInstance 0.012;
+		capture_stderr
+	);
+use Data::Dumper;
+use Types::Standard -types;
+
+use	lib 
+		'../../../lib',
+		'../../', 'lib', 't';
+use MooseX::ShortCut::BuildInstance;
 my( 
 			$pet_rock_class, $paco, $pacos_evil_twin, $pacos_good_twin, 
 			$anonymous_class, $anonymous_instance,
@@ -32,6 +33,7 @@ my  		@exported_methods = qw(
 				build_class
 				build_instance
 				should_re_use_classes
+				set_class_immutability
 			);
 my			$answer_ref = [
 				'',#qr/The composed class passed to 'new' does not have either a 'before_method' or an 'after_method' the Role 'Data::Walk::Print' will be added/,
@@ -39,7 +41,7 @@ my			$answer_ref = [
 					"undef,",
 				],
 			];
-### <where> - easy questions
+### <where> - Start with the easy questions
 map{ 
 has_attribute_ok
 			'MooseX::ShortCut::BuildInstance', $_,
@@ -52,7 +54,7 @@ map{
 can_ok		'main', $_,
 } 			@exported_methods;
 
-### <where> - harder questions
+### <where> - Now the harder questions ...
 lives_ok{
 			$pet_rock_class = build_class(
 				package => 'Pet::Rock',
@@ -71,18 +73,26 @@ lives_ok{
 }										'Get my own pet rock Paco';
 is_deeply	[ $paco->meta->superclasses ], ['Vegetable'],
 										"See if Paco is a Vegetable class (Not really right)";
-			my $error_message = capture_stderr{
+			my	$error_message;
+			$error_message = capture_stderr{
 lives_ok{
 			$pacos_evil_twin = build_instance(
 				package => 'Pet::Rock',
 				superclasses =>['Mineral'],
 				roles =>['Identity'],
+				add_attributes =>{ owner =>{ is => 'ro', isa => Str } },
+				add_methods =>{ rochambeau => sub{
+						my ( $self, $challenge ) = @_;
+						### <where> - Champion: $self->name
+						### <where> - challenged in rochambeau by: $challenge
+						return ( $challenge =~ /(sissers|lizard)/i ) ? 'won' : 'lost';
+				} },
 				type_of_mineral => 'Quartz',
 				name => 'Fransisco',
 			);
 }										"Get Paco's doppleganger";
 			};
-like		$error_message, qr/^You already built the class: Pet::Rock/,
+like		$error_message, qr/^You already built the class: Pet::Rock/m,
 										"Check that a (correct) warning was issued for the overwritten class!";
 is_deeply	[ $paco->meta->superclasses ], ['Mineral'],
 										"See if Paco (not Fransisco) is a Mineral class now (dangerous magic!)";
@@ -96,20 +106,40 @@ lives_ok{
 				roles =>['Identity'],
 				type_of_mineral => 'Quartz',
 				name => 'Pancho',
+				owner => 'Dr. Sheldon Cooper',
 			);
-}										"Get Paco's doppleganger";
+}										"Get Paco's doppleganger( excersizing some of the Original class magic not here)";
 			};
-is			$error_message, '',			"Check that no warning was issued for the overwritten class!";
-does_ok		$pacos_good_twin, 'Identity',	"Ensure that Paco's twin really does have an Identity";
+lives_ok{
+			my @error_list = split /\n/, $error_message;
+			$error_message = [];
+			for my $line ( @error_list ){
+				print $line . "\n";
+				if( $line !~ /^(###|'?\s{0,3})/ ){
+					push @$error_message, $line;
+				}
+			}
+}										"Massage the STDERR output";
+is			scalar( @$error_message ), 0,
+										"Check that no warning was issued for the overwritten class!";
+does_ok		$pacos_good_twin, 'Identity',
+										"Ensure that Paco's twin really does have an Identity";
 is			$pacos_good_twin->meta->name, 'Pet::Rock',
 										"Make sure the twin is also a Pet::Rock class";
 is_deeply	[ $paco->meta->superclasses ], ['Mineral'],
 										"Make sure that Paco is a Mineral class";
 is_deeply	[ $pacos_good_twin->meta->superclasses ], ['Mineral'],
 										"Make sure that Pancho (Paco's twin) is also a Mineral class";
-### <where> - $paco: $paco
-is			$paco->name, 'Paco',	"Make sure Paco knows his name";
-is			$pacos_good_twin->name, 'Pancho',"Make sure Pancho knows his name";
+### <where> - Paco is: $paco
+is			$paco->name, 'Paco',		"Make sure Paco knows his name";
+is			$pacos_good_twin->name, 'Pancho',
+										"Make sure Pancho knows his name";
+is			$pacos_good_twin->rochambeau( 'paper' ), 'lost',
+										"See if 'Pancho' beats paper in rochambeau (No)";
+is			$pacos_good_twin->rochambeau( 'sissers' ), 'won',
+										"See if 'Pancho' beats sissers in rochambeau (Yes)";
+is			$pacos_good_twin->owner, 'Dr. Sheldon Cooper',
+										"Who owns 'Pancho'? - Dr. Sheldon Cooper";
 lives_ok{
 			$anonymous_class = build_class(
 				superclasses =>['Mineral'],

@@ -4,7 +4,7 @@
       "Jed Lund <jandrew@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.132830",
+   "generated_by" : "Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.132830",
    "license" : [
       "perl_5"
    ],
@@ -13,6 +13,13 @@
       "version" : "2"
    },
    "name" : "MooseX-ShortCut-BuildInstance",
+   "no_index" : {
+      "package" : [
+         "Anonymous::Shiras::Moose::Class",
+         "Test::Role",
+         "Test::Class"
+      ]
+   },
    "prereqs" : {
       "configure" : {
          "requires" : {
@@ -27,33 +34,36 @@
             "Moose::Exporter" : "0",
             "Moose::Meta::Class" : "0",
             "Moose::Util" : "0",
-            "MooseX::Types::Moose" : "0",
             "Smart::Comments" : "0",
+            "Type::Library" : "0",
+            "Type::Utils" : "0",
+            "Types::Standard" : "0",
+            "lib" : "0",
             "perl" : "5.010",
-            "version" : "0.94"
+            "strict" : "0",
+            "version" : "0.94",
+            "warnings" : "0"
          }
       },
       "test" : {
          "requires" : {
             "Capture::Tiny" : "0.12",
-            "Modern::Perl" : "0",
             "Moose::Role" : "0",
             "MooseX::StrictConstructor" : "0",
             "Test::Moose" : "0",
             "Test::More" : "0",
-            "Test::Most" : "0",
-            "lib" : "0"
+            "Test::Most" : "0"
          }
       }
    },
    "provides" : {
-      "Anonymous::Shiras::Moose::Class" : {
-         "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v0.14.2"
-      },
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v0.14.2"
+         "version" : "v1.2.2"
+      },
+      "MooseX::ShortCut::BuildInstance::Types" : {
+         "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
+         "version" : "v1.2.2"
       }
    },
    "release_status" : "stable",
@@ -68,6 +78,7 @@
          "web" : "https://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v0.014.002"
+   "version" : "v1.2.2",
+   "x_authority" : "cpan:JANDREW"
 }
 
