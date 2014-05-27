@@ -345,7 +345,7 @@ is used if the -ENV option is set
 
 =back
 
-=head1 Build/Install from Source - (for example git)
+=head1 Build/Install from Source
 
 =over
 	
