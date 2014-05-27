@@ -1,6 +1,8 @@
 =head1 MooseX::ShortCut::BuildInstance
 
-This module is a shortcut to build L<Moose> instances on the fly.=head1 SYNOPSIS
+This module is a shortcut to build L<Moose> instances on the fly.
+
+=head1 SYNOPSIS
     
 	#!perl
 	package Mineral;
