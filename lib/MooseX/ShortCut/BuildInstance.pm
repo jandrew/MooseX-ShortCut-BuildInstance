@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version 0.94; our $VERSION = qv('v1.2.2');
+use version; our $VERSION = qv("v1.4.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;

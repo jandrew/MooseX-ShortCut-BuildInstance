@@ -48,7 +48,7 @@ my			$question_ref =[
 			];
 my			$answer_ref = [
 				undef, undef,
-				qr/\Q-Bad-Name- does not match: (?^:^[A-Za-z:]+$)\E/,
+				qr/\-Bad\-Name\-\ does not match.*\[A\-Za\-z\:\]/,
 				undef, undef,
 				qr/scalar \@\$_ > 0/,
 				qr/Undef did not pass type constraint "Defined"/,
