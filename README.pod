@@ -183,7 +183,7 @@ are hash refs of the normal definitions used to define a Moose attribute.
 =back
 
 
-B<add_roles_in_sequence:>  this will add methods to the class using the 
+B<add_methods:>  this will add methods to the class using the 
 L<Moose::Meta::Class>-E<gt>add_method method.  Because these definitions 
 are passed as key / value pairs in a hash ref they are not added in 
 any specific order.

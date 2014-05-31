@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.4.2");
+use version; our $VERSION = qv("v1.6.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -30,7 +30,7 @@ if( $ENV{ Smart_Comments } ){
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
-our	$instance_count 		= 1;
+our	$anonymous_class_count	= 0;
 our	$built_classes			= {};
 our	$re_use_classes 		= 0;
 our	$make_classes_immutable = 1;
@@ -73,7 +73,7 @@ sub build_class{
 			delete $args->{$key};
 		}elsif( $key eq 'package' ){
 			### <where> - missing a package value ...
-			$class_args->{$key} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . ++$instance_count;
+			$class_args->{$key} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . ++$anonymous_class_count;
 		}elsif( $key eq 'superclasses' ){
 			### <where> - missing the superclass ...
 			$class_args->{$key} = [ 'Anonymous::Shiras::Moose::Class' ],
@@ -356,7 +356,7 @@ are hash refs of the normal definitions used to define a Moose attribute.
 =back
 
 
-B<add_roles_in_sequence:>  this will add methods to the class using the 
+B<add_methods:>  this will add methods to the class using the 
 L<Moose::Meta::Class>-E<gt>add_method method.  Because these definitions 
 are passed as key / value pairs in a hash ref they are not added in 
 any specific order.
@@ -408,10 +408,10 @@ triggered by the environmental variable to comfort non-believers.  Setting the
 variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
 There are three levels of 'Smartness' available in this module '### #### #####'.
 
-=head4 $MooseX::ShortCut::BuildInstance::instance_count
+=head4 $MooseX::ShortCut::BuildInstance::anonymous_class_count
 
 This is an integer that increments and appends to the anonymous package name 
-for each new anonymous package created.
+for each new anonymous package (class) created.
 
 =head4 $MooseX::ShortCut::BuildInstance::built_classes
 

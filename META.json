@@ -59,11 +59,11 @@
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.4.2"
+         "version" : "v1.6.2"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.4.2"
+         "version" : "v1.6.2"
       }
    },
    "release_status" : "stable",
@@ -78,7 +78,7 @@
          "web" : "https://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.4.2",
+   "version" : "v1.6.2",
    "x_authority" : "cpan:JANDREW"
 }
 

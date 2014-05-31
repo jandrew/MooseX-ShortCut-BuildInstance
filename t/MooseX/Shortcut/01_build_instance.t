@@ -140,6 +140,8 @@ is			$pacos_good_twin->rochambeau( 'sissers' ), 'won',
 										"See if 'Pancho' beats sissers in rochambeau (Yes)";
 is			$pacos_good_twin->owner, 'Dr. Sheldon Cooper',
 										"Who owns 'Pancho'? - Dr. Sheldon Cooper";
+is			$MooseX::ShortCut::BuildInstance::anonymous_class_count, 0,
+										"Check if any anonymous classes have been built";
 lives_ok{
 			$anonymous_class = build_class(
 				superclasses =>['Mineral'],
@@ -147,7 +149,9 @@ lives_ok{
 			);
 }										"Build a Pet::Rock class (without the package name)";
 like		$anonymous_class->meta->name, qr/^ANONYMOUS_SHIRAS_MOOSE_CLASS_\d*$/,
-										"Make sure this is an Anonymous class";
+										"Make sure this is an anonymous class";
+is			$MooseX::ShortCut::BuildInstance::anonymous_class_count, 1,
+										"... and that the counter is incremented";
 lives_ok{
 			$pet_rock_class = build_class(
 				package => 'Individual',
