@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.6.2");
+use version; our $VERSION = qv("v1.8.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -93,13 +93,6 @@ sub build_class{
 			$class_args->{package} :
 			Moose::Meta::Class->create( %{$class_args} )->name;
 	### <where> - class to this point: $class_name->dump( 2 )
-	if( exists $args->{add_roles_in_sequence} ){
-		for my $role ( @{$args->{add_roles_in_sequence}} ){
-			### <where> - adding role: $role
-			apply_all_roles( $class_name, $role );
-		}
-		delete $args->{add_roles_in_sequence};
-	}
 	if( exists $args->{add_attributes} ){
 		my	$meta = $class_name->meta;
 		for my $attribute ( keys %{$args->{add_attributes}} ){
@@ -115,6 +108,13 @@ sub build_class{
 			$meta->add_method( $method => $args->{add_methods}->{$method} );
 		}
 		delete $args->{add_methods};
+	}
+	if( exists $args->{add_roles_in_sequence} ){
+		for my $role ( @{$args->{add_roles_in_sequence}} ){
+			### <where> - adding role: $role
+			apply_all_roles( $class_name, $role );
+		}
+		delete $args->{add_roles_in_sequence};
 	}
 	if( $make_classes_immutable ){
 		### <where> - Immutablizing the class ...
@@ -290,8 +290,8 @@ For this part the function specifically uses the argument callouts 'package',
 though L<Moose::Meta::Class>-E<gt>class(%args) allows for the package name to be called 
 as the first element of an odd numbered list this implementation does not.  To define 
 a 'package' name it must be set as the value of the 'package' key in the %args.>  
-This function then takes the following arguements; 'add_roles_in_sequence', 
-'add_attributes', and 'add_methods' and implements them in that order.   The 
+This function then takes the following arguements; 'add_attributes', 'add_methods', 
+and 'add_roles_in_sequence' and implements them in that order.   The 
 implementation of these values is done with L<Moose::Util> 'apply_all_roles' 
 and the meta capability in L<Moose>.
 
@@ -330,19 +330,6 @@ B<accepts:> a recognizable (by Moose) class name
 
 =back
 
-B<add_roles_in_sequence:> this will compose, in sequence, each role in 
-the array ref into the class built on the prior three arguments using 
-L<Moose::Util> apply_all_roles.  This will allow an added role to 
-'require' elements of a role earlier in the sequence.  The roles 
-implemented with the L<role|/roles:> key are installed first and in a 
-group. Then these roles are installed one at a time.
-
-=over
-
-B<accepts:> an array ref list of roles recognizable (by Moose) as roles
-
-=back
-
 B<add_attributes:> this will add attributes to the class using the 
 L<Moose::Meta::Class>-E<gt>add_attribute method.  Because these definitions 
 are passed as key / value pairs in a hash ref they are not added in 
@@ -365,6 +352,19 @@ any specific order.
 
 B<accepts:> a hash ref where the keys are method names and the values 
 are anonymous subroutines or subroutine references.
+
+=back
+
+B<add_roles_in_sequence:> this will compose, in sequence, each role in 
+the array ref into the class built on the prior three arguments using 
+L<Moose::Util> apply_all_roles.  This will allow an added role to 
+'require' elements of a role earlier in the sequence.  The roles 
+implemented with the L<role|/roles:> key are installed first and in a 
+group. Then these roles are installed one at a time.
+
+=over
+
+B<accepts:> an array ref list of roles recognizable (by Moose) as roles
 
 =back
 

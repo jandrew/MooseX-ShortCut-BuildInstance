@@ -44,9 +44,9 @@ my %WriteMakefileArgs = (
     "Test::More" => 0,
     "Test::Most" => 0
   },
-  "VERSION" => "v1.6.2",
+  "VERSION" => "v1.8.2",
   "test" => {
-    "TESTS" => "t/*.t t/MooseX/Shortcut/*.t t/MooseX/Shortcut/BuildInstance/*.t"
+    "TESTS" => "t/*.t t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }
 );
 

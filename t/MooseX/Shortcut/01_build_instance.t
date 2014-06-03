@@ -59,7 +59,8 @@ lives_ok{
 			$pet_rock_class = build_class(
 				package => 'Pet::Rock',
 				superclasses =>['Vegetable'],
-				roles =>['Identity'],
+				add_methods	=>{ is_important => sub{ print "I'm the best" }, },
+				add_roles_in_sequence =>['Identity'],
 			);
 }										"Build a Pet::Rock class (with an Identity)";
 does_ok		$pet_rock_class, 'Identity',"Ensure the Pet::Rock really does have an Identity";
@@ -79,14 +80,17 @@ lives_ok{
 			$pacos_evil_twin = build_instance(
 				package => 'Pet::Rock',
 				superclasses =>['Mineral'],
-				roles =>['Identity'],
+				add_roles_in_sequence =>['Identity'],
 				add_attributes =>{ owner =>{ is => 'ro', isa => Str } },
-				add_methods =>{ rochambeau => sub{
+				add_methods =>{
+					rochambeau => sub{
 						my ( $self, $challenge ) = @_;
 						### <where> - Champion: $self->name
 						### <where> - challenged in rochambeau by: $challenge
 						return ( $challenge =~ /(sissers|lizard)/i ) ? 'won' : 'lost';
-				} },
+					},
+					is_important => sub{ print "I'm the best" },
+				},
 				type_of_mineral => 'Quartz',
 				name => 'Fransisco',
 			);
@@ -145,7 +149,8 @@ is			$MooseX::ShortCut::BuildInstance::anonymous_class_count, 0,
 lives_ok{
 			$anonymous_class = build_class(
 				superclasses =>['Mineral'],
-				roles =>['Identity'],
+				add_methods	=>{ is_important => sub{ print "I'm the best" }, },
+				add_roles_in_sequence =>['Identity'],
 			);
 }										"Build a Pet::Rock class (without the package name)";
 like		$anonymous_class->meta->name, qr/^ANONYMOUS_SHIRAS_MOOSE_CLASS_\d*$/,
@@ -155,7 +160,8 @@ is			$MooseX::ShortCut::BuildInstance::anonymous_class_count, 1,
 lives_ok{
 			$pet_rock_class = build_class(
 				package => 'Individual',
-				roles =>['Identity'],
+				add_methods	=>{ is_important => sub{ print "I'm the best" }, },
+				add_roles_in_sequence =>['Identity'],
 				type_of_mineral => 'Quartz',
 			);
 }										"Build an Individual class (without a Mineral superclass)";

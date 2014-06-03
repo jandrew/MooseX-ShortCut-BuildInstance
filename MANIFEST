@@ -12,7 +12,7 @@ lib/MooseX/ShortCut/BuildInstance/Types.pm
 t/01-load.t
 t/Identity.pm
 t/Mineral.pm
-t/MooseX-ShortCut-BuildInstance_example.pl
-t/MooseX/Shortcut/01_build_instance.t
-t/MooseX/Shortcut/BuildInstance/01_types.t
+t/MooseX/ShortCut/01_build_instance.t
+t/MooseX/ShortCut/BuildInstance/01_types.t
+t/MooseX/ShortCut/build_instance_example.pl
 t/Vegetable.pm

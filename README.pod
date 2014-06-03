@@ -117,8 +117,8 @@ For this part the function specifically uses the argument callouts 'package',
 though L<Moose::Meta::Class>-E<gt>class(%args) allows for the package name to be called 
 as the first element of an odd numbered list this implementation does not.  To define 
 a 'package' name it must be set as the value of the 'package' key in the %args.>  
-This function then takes the following arguements; 'add_roles_in_sequence', 
-'add_attributes', and 'add_methods' and implements them in that order.   The 
+This function then takes the following arguements; 'add_attributes', 'add_methods', 
+and 'add_roles_in_sequence' and implements them in that order.   The 
 implementation of these values is done with L<Moose::Util> 'apply_all_roles' 
 and the meta capability in L<Moose>.
 
@@ -157,19 +157,6 @@ B<accepts:> a recognizable (by Moose) class name
 
 =back
 
-B<add_roles_in_sequence:> this will compose, in sequence, each role in 
-the array ref into the class built on the prior three arguments using 
-L<Moose::Util> apply_all_roles.  This will allow an added role to 
-'require' elements of a role earlier in the sequence.  The roles 
-implemented with the L<role|/roles:> key are installed first and in a 
-group. Then these roles are installed one at a time.
-
-=over
-
-B<accepts:> an array ref list of roles recognizable (by Moose) as roles
-
-=back
-
 B<add_attributes:> this will add attributes to the class using the 
 L<Moose::Meta::Class>-E<gt>add_attribute method.  Because these definitions 
 are passed as key / value pairs in a hash ref they are not added in 
@@ -192,6 +179,19 @@ any specific order.
 
 B<accepts:> a hash ref where the keys are method names and the values 
 are anonymous subroutines or subroutine references.
+
+=back
+
+B<add_roles_in_sequence:> this will compose, in sequence, each role in 
+the array ref into the class built on the prior three arguments using 
+L<Moose::Util> apply_all_roles.  This will allow an added role to 
+'require' elements of a role earlier in the sequence.  The roles 
+implemented with the L<role|/roles:> key are installed first and in a 
+group. Then these roles are installed one at a time.
+
+=over
+
+B<accepts:> an array ref list of roles recognizable (by Moose) as roles
 
 =back
 
@@ -351,7 +351,9 @@ is used if the -ENV option is set
 	
 B<1.> Download a compressed file with the code
 	
-B<2.> Extract the code from the compressed file
+B<2.> Extract the code from the compressed file.  If you are using tar this should work:
+
+        tar -zxvf MooseX-ShortCut-BuildInstance-v1.xx.tar.gz
 
 B<3.> Change (cd) into the extracted directory
 
@@ -361,7 +363,8 @@ B<3.> Change (cd) into the extracted directory
 
 	perl  -V:make
 
-Then (adjusting make as needed (dmake?))
+Then
+(for Windows substitute the correct make function (s/make/dmake/g)?)
 
 	>perl Makefile.PL
 
@@ -369,9 +372,8 @@ Then (adjusting make as needed (dmake?))
 
 	>make test
 
-	>make install
+	>make install # As sudo/root
 
 	>make clean
-	(use the windows make version as appropriate (dmake?))
 	
 =cut

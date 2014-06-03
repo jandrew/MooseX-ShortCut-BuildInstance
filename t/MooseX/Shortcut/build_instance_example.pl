@@ -9,7 +9,7 @@ use Moose::Role;
 
 has 'name' =>( is => 'ro' );
 
-use lib '../lib';
+use lib '../../../lib';
 use MooseX::ShortCut::BuildInstance;
 use Test::More;
 use Test::Moose;
