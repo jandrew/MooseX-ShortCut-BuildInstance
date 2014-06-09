@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.8.2");
+use version; our $VERSION = qv("v1.10.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -64,8 +64,8 @@ sub build_class{
 					if( !$re_use_classes ){
 						push @warn_list, 'You already built the class: ' . $args->{$key};
 						$warning = 1;
-						### <where> - make_mutable: $args->{$key}
-						$class_args->{package}->meta->make_mutable;
+						### <where> - unmutablizing the class ...
+						$args->{$key}->meta->make_mutable;
 					}
 				}
 				$built_classes->{$args->{$key}} = 1;
@@ -89,10 +89,18 @@ sub build_class{
 	### <where> - want array: $want_array
 	### <where> - Pre exists state: $pre_exists
 	### <where> - $warning state: $warning
+	### <where> - finalize the class name or load a new one ...
 	my	$class_name = ( $pre_exists and !$warning ) ?
 			$class_args->{package} :
 			Moose::Meta::Class->create( %{$class_args} )->name;
 	### <where> - class to this point: $class_name->dump( 2 )
+	if( !$class_name->meta->is_mutable and
+		(	exists $args->{add_attributes} or
+			exists $args->{add_methods} or
+			exists $args->{add_roles_in_sequence} ) ){
+		### <where> - unmutablizing the class ...
+		$class_name->meta->make_mutable;
+	}
 	if( exists $args->{add_attributes} ){
 		my	$meta = $class_name->meta;
 		for my $attribute ( keys %{$args->{add_attributes}} ){
