@@ -59,11 +59,11 @@
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.10.2"
+         "version" : "v1.12.2"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.10.2"
+         "version" : "v1.12.2"
       }
    },
    "release_status" : "stable",
@@ -71,14 +71,14 @@
       "bugtracker" : {
          "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance/issues"
       },
-      "homepage" : "https://github.com/jandrew",
+      "homepage" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance.git",
-         "web" : "https://github.com///github.com/jandrew/MooseX-ShortCut-BuildInstance"
+         "url" : "git://github.com/jandrew/MooseX-ShortCut-BuildInstance.git",
+         "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.10.2",
+   "version" : "v1.12.2",
    "x_authority" : "cpan:JANDREW"
 }
 
