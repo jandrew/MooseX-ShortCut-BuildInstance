@@ -50,20 +50,24 @@
             "Capture::Tiny" : "0.12",
             "Moose::Role" : "0",
             "MooseX::StrictConstructor" : "0",
+            "TAP::Formatter::Console" : "0",
+            "TAP::Harness" : "0",
+            "TAP::Parser::Aggregator" : "0",
             "Test::Moose" : "0",
             "Test::More" : "0",
-            "Test::Most" : "0"
+            "Test::Most" : "0",
+            "Test::Requires" : "0"
          }
       }
    },
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.16.2"
+         "version" : "v1.20.2"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.16.2"
+         "version" : "v1.20.2"
       }
    },
    "release_status" : "stable",
@@ -78,7 +82,7 @@
          "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.16.2",
+   "version" : "v1.20.2",
    "x_authority" : "cpan:JANDREW"
 }
 

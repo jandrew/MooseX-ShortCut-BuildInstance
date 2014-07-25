@@ -1,12 +1,12 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance    6#########7#########8#########9
 #!perl
-#~ BEGIN{
+BEGIN{
 	#~ $ENV{ Smart_Comments } = '### #### #####';
-#~ }
-#~ if( $ENV{ Smart_Comments } ){
-	#~ use Smart::Comments -ENV;
-	#~ ### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
-#~ }
+}
+if( $ENV{ Smart_Comments } ){
+	use Smart::Comments -ENV;
+	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
+}
 
 use Test::Most;
 use Test::Moose;

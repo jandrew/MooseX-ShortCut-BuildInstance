@@ -1,8 +1,8 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance::Types       7#########8#########9
 #!perl
-#~ BEGIN{
-	#~ $ENV{ Smart_Comments } = '### #### #####';
-#~ }
+BEGIN{
+	#~ $ENV{ Smart_Comments } = '### ####'; #####
+}
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
 	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance-Types test...
@@ -16,7 +16,7 @@ use Capture::Tiny qw( capture_stderr );
 use Types::Standard -types;
 use	lib 
 		'../../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types v1.2 qw(
+use MooseX::ShortCut::BuildInstance::Types v1.16 qw(
 		NameSpace
 		SuperClassesList
 		RolesList
@@ -119,19 +119,11 @@ ok			Methods->( $question_ref->[$_] ),
 dies_ok{	Methods->( $question_ref->[$_] ) }
 							"Check that a bad Methods fails: ". Dumper( $question_ref->[$_] );
 like		$@, $answer_ref->[$_],
-							"... and check for the correct error message";
+							"... and check for the correct error message: " . $answer_ref->[$_];
+			##### <where> - against returned error: $@
 			} ( 17..19 );
 			map{
-ok			Methods->( $question_ref->[$_] ),
-							"Check that a good Methods passes: " . Dumper( $question_ref->[$_] );
-			} ( 16..16 );
-			map{
-dies_ok{	Methods->( $question_ref->[$_] ) }
-							"Check that a bad Methods fails: ". Dumper( $question_ref->[$_] );
-like		$@, $answer_ref->[$_],
-							"... and check for the correct error message";
-			} ( 17..19 );
-			map{
+			### <where> - made it this far!
 ok			BuildClassDict->( $question_ref->[$_] ),
 							"Check that a good BuildClassDict passes: " . Dumper( $question_ref->[$_] );
 			} ( 20..20 );

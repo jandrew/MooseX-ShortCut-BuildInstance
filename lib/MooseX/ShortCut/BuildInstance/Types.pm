@@ -1,7 +1,8 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = version->declare("v1.16.2");
+use version; our $VERSION = qv("v1.20.2");
 use strict;
 use warnings;
+use Data::Dumper;
 use Type::Utils -all;
 use Type::Library
 	-base,
@@ -14,10 +15,17 @@ use Type::Library
 		BuildClassDict
 	);
 use Types::Standard -types;
+if( exists $INC{'Type/Tiny/XS.pm'} ){
+	eval "use Type::Tiny::XS 0.010";
+	if( $@ ){
+		die "You have loaded Type::Tiny::XS but versions prior to 0.010 will cause this module to fail";
+	}
+}
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;#'###'
-	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance-Types ...
 }
+#~ ### <where> - going: %INC
+#~ exit 1;
 
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
@@ -29,22 +37,27 @@ if( $ENV{ Smart_Comments } ){
 declare NameSpace,
 	as Str,
     where{ $_ =~ /^[A-Za-z:]+$/ },
+	#~ inline_as { undef, "$_ =~ /^[A-Za-z:]+\$/" },
 	message{ "-$_- does not match: " . qr/^[A-Za-z:]+$/ };
 	
 declare SuperClassesList,
 	as ArrayRef[ ClassName ],
+	#~ inline_as { undef, "\@{$_} > 0" },
 	where{ scalar( @$_ ) > 0 };
 	
 declare RolesList,
 	as ArrayRef[ RoleName ],
+	#~ inline_as { undef, "\@{$_} > 0" },
 	where{ scalar( @$_ ) > 0 };
 	
 declare Attributes,
 	as HashRef[ HashRef ],
+	#~ inline_as { undef, "\%{$_} > 0" },
 	where{ scalar( keys %$_ ) > 0 };
 	
 declare Methods,
 	as HashRef[ CodeRef ],
+	#~ inline_as { undef, "\%{$_} > 0" },
 	where{ scalar( keys %$_ ) > 0 };
 	
 declare BuildClassDict,
@@ -56,7 +69,7 @@ declare BuildClassDict,
 		add_attributes			=> Optional[ Attributes ],
 		add_methods				=> Optional[ Methods ],
 	],
-	where{ scalar( keys %$_ ) > 0 };
+	where{ scalar( keys( %$_ ) ) > 0 };
 
 #########1 Declared Coercions 3#########4#########5#########6#########7#########8#########9
 
@@ -76,6 +89,13 @@ __END__
 =head1 NAME
 
 MooseX::ShortCut::BuildInstance::Types - The BuildInstance type library
+
+=head1 WARNING
+
+This module uses L<Type::Tiny> which can, in the background, use L<Type::Tiny::XS>.  
+While in general this is a good thing you will need to make sure that 
+Type::Tiny::XS is version 0.010 or newer since the older ones didn't support the 
+'Optional' method.
     
 =head1 DESCRIPTION
 
@@ -126,7 +146,7 @@ B<Test:> This is a hash ref of attributes to be added to the built class
 
 B<Accepts:> the hash keys will be treated as the attribute names and the values 
 will be treated as the attribute settings.  Only HashRefs are accepted as values 
-but no testing of the HashRef for suitability as attribute settins is done prior 
+but no testing of the HashRef for suitability as attribute settings is done prior 
 to implementation by $meta-E<gt>add_attribute( $value ).
 
 =back
@@ -206,11 +226,7 @@ This software is copyrighted (c) 2014 by Jed Lund
 
 L<version>
 
-L<Type::Utils>
-
-L<Type::Library>
-
-L<Types::Standard>
+L<Type::Tiny>
 
 =back
 

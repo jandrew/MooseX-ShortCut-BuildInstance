@@ -15,7 +15,7 @@ This module is a shortcut to build L<Moose> instances on the fly.
 
 	has 'name' =>( is => 'ro' );
 
-	use MooseX::ShortCut::BuildInstance qw( build_instance );
+	use MooseX::ShortCut::BuildInstance;
 	use Test::More;
 	use Test::Moose;
 
@@ -27,11 +27,9 @@ This module is a shortcut to build L<Moose> instances on the fly.
 			name => 'Paco',
 		);
 
-	does_ok( $paco, 'Identity', 'Check that the ' . $paco->meta->name . 
-		' has an -Identity-' );
-	say 'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
-		( join ', ', $paco->meta->superclasses ) . ') is called -' . 
-		$paco->name . "-\n";
+	does_ok( $paco, 'Identity', 'Check that the ' . $paco->meta->name . ' has an -Identity-' );
+	print'My ' . $paco->meta->name . ' made from -' . $paco->type . '- (a ' .
+	( join ', ', $paco->meta->superclasses ) . ') is called -' . $paco->name . "-\n";
 	done_testing();
     
     ##############################################################################
@@ -78,6 +76,11 @@ against the resulting class name over and over again.  Another alternative is to
 leave the 'package' argument out of 'build_instance' and let this class create a 
 unique by-instance anonymous class/package name.
 
+The Types module in this package uses L<Type::Tiny> which can, in the 
+background, use L<Type::Tiny::XS>.  While in general this is a good thing you will 
+need to make sure that Type::Tiny::XS is version 0.010 or newer since the older 
+ones didn't support the 'Optional' method.
+
 =head1 Functions for Export
 
 =head2 build_instance( %args|\%args )
@@ -122,9 +125,13 @@ and 'add_roles_in_sequence' and implements them in that order.   The
 implementation of these values is done with L<Moose::Util> 'apply_all_roles' 
 and the meta capability in L<Moose>.
 
-B<Accepts:> a hash or hashref of arguments.  I<These keys are always used 
-to build the class.  They are never passed on to %remaining_args.>  The six 
-key-E<gt>value pairs use are;
+B<Accepts:> a hash or hashref of arguments.  Six keys are stripped from the hash or 
+hash ref of arguments.  I<These keys are always used to build the class.  They are 
+never passed on to %remaining_args.>
+
+=over
+
+B<The first three key-E<gt>value pairs are consumed simultaneously>.  They are;
 
 =over
 
@@ -156,6 +163,13 @@ B<roles:> this is intentionally the same key from Moose::Meta::Class
 B<accepts:> a recognizable (by Moose) class name
 
 =back
+
+=back
+
+B<The second three key-E<gt>value pairs are consumed in the following 
+sequence>.  They are;
+
+=over
 
 B<add_attributes:> this will add attributes to the class using the 
 L<Moose::Meta::Class>-E<gt>add_attribute method.  Because these definitions 
@@ -192,6 +206,8 @@ group. Then these roles are installed one at a time.
 =over
 
 B<accepts:> an array ref list of roles recognizable (by Moose) as roles
+
+=back
 
 =back
 
@@ -235,10 +251,10 @@ triggered by the environmental variable to comfort non-believers.  Setting the
 variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
 There are three levels of 'Smartness' available in this module '### #### #####'.
 
-=head4 $MooseX::ShortCut::BuildInstance::instance_count
+=head4 $MooseX::ShortCut::BuildInstance::anonymous_class_count
 
 This is an integer that increments and appends to the anonymous package name 
-for each new anonymous package created.
+for each new anonymous package (class) created.
 
 =head4 $MooseX::ShortCut::BuildInstance::built_classes
 
@@ -250,8 +266,8 @@ to manage duplicate build behaviour.
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
 If the package name is overwritten it will L<cluck|https://metacpan.org/pod/Carp#SYNOPSIS> 
-in warning.  This can be changed with the exported method L<should_re_use_classes
-|/should_re_use_classes( $bool )>.
+in warning.  The class reuse behaviour can be changed with the exported method 
+L<should_re_use_classes|/should_re_use_classes( $bool )>.
 
 =head4 $MooseX::ShortCut::BuildInstance::make_classes_immutable
 
@@ -301,7 +317,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013, 2014 by Jed Lund
+This software is copyrighted (c) 2013 by Jed Lund
 
 =head1 Dependencies
 
@@ -324,9 +340,11 @@ L<Moose::Util> - apply_all_roles
 
 L<Moose::Exporter>
 
-L<Types::Standard>
+L<Type::Tiny>
 
 L<Data::Dumper>
+
+L<MooseX::ShortCut::BuildInstance::Types>
 
 =back
 
