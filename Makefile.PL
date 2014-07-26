@@ -49,7 +49,7 @@ my %WriteMakefileArgs = (
     "Test::Requires" => 0,
     "Type::Tiny::XS" => "0.010"
   },
-  "VERSION" => "v1.22.2",
+  "VERSION" => "v1.22.4",
   "test" => {
     "TESTS" => "t/*.t t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }

@@ -31,10 +31,10 @@ no_index:
 provides:
   MooseX::ShortCut::BuildInstance:
     file: lib/MooseX/ShortCut/BuildInstance.pm
-    version: v1.22.2
+    version: v1.22.4
   MooseX::ShortCut::BuildInstance::Types:
     file: lib/MooseX/ShortCut/BuildInstance/Types.pm
-    version: v1.22.2
+    version: v1.22.4
 requires:
   Carp: 0
   Data::Dumper: 0
@@ -55,5 +55,5 @@ resources:
   bugtracker: https://github.com/jandrew/MooseX-ShortCut-BuildInstance/issues
   homepage: https://github.com/jandrew/MooseX-ShortCut-BuildInstance
   repository: https://github.com/jandrew/MooseX-ShortCut-BuildInstance.git
-version: v1.22.2
+version: v1.22.4
 x_authority: cpan:JANDREW
