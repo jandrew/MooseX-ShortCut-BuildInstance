@@ -8,7 +8,7 @@ if( $ENV{ Smart_Comments } ){
 	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
 }
 
-use Test::Most;
+use Test::Most tests => 40;
 use Test::Moose;
 use Capture::Tiny 0.12 qw(
 		capture_stderr

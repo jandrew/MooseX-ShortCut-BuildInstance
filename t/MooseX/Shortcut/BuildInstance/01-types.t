@@ -9,7 +9,7 @@ if( $ENV{ Smart_Comments } ){
 }
 $| = 1;
 
-use	Test::Most;
+use	Test::Most tests => 40;
 use	Test::Moose;
 use Data::Dumper;
 use Capture::Tiny qw( capture_stderr );

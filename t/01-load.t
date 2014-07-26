@@ -1,6 +1,6 @@
 #!perl
 ### Test that the module(s) load!(s)
-use	Test::More;
+use	Test::More tests => 12;
 use	Test::Requires "v5.10";
 use Data::Dumper;
 BEGIN{ use_ok( version ) };
