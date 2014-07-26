@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.20.2");
+use version; our $VERSION = qv("v1.22.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -18,13 +18,9 @@ Moose::Exporter->setup_import_methods(
 use Types::Standard qw(
 		Bool
     );
-#~ if( exists $INC{'Type/Tiny/XS.pm'} ){
-	#~ eval "use Type::Tiny::XS 0.010";
-	#~ die "You have loaded Type::Tiny::XS but versions prior to 0.010 will cause this module to fail" if $@;
-#~ }
 use Data::Dumper;
 use lib	'../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types 1.018 qw(
+use MooseX::ShortCut::BuildInstance::Types 1.020 qw(
 		BuildClassDict
 	);
 if( $ENV{ Smart_Comments } ){

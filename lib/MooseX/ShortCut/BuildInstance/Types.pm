@@ -1,10 +1,10 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = qv("v1.20.2");
+use version; our $VERSION = qv("v1.22.2");
 use strict;
 use warnings;
 use Data::Dumper;
 use Type::Utils -all;
-use Type::Library
+use Type::Library 0.046
 	-base,
 	-declare => qw(
 		NameSpace
@@ -24,9 +24,6 @@ if( exists $INC{'Type/Tiny/XS.pm'} ){
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;#'###'
 }
-#~ ### <where> - going: %INC
-#~ exit 1;
-
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
@@ -89,18 +86,13 @@ __END__
 =head1 NAME
 
 MooseX::ShortCut::BuildInstance::Types - The BuildInstance type library
-
-=head1 WARNING
-
-This module uses L<Type::Tiny> which can, in the background, use L<Type::Tiny::XS>.  
-While in general this is a good thing you will need to make sure that 
-Type::Tiny::XS is version 0.010 or newer since the older ones didn't support the 
-'Optional' method.
     
 =head1 DESCRIPTION
 
 This is the package for managing types in the L<MooseX::ShortCut::BuildInstance> 
 package.
+
+=head2 L<Caveat utilitor|http://en.wiktionary.org/wiki/Appendix:List_of_Latin_phrases_(A%E2%80%93E)#C>
 
 =head2 Types
 

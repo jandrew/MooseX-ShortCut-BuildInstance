@@ -13,6 +13,7 @@ use	Test::Most;
 use	Test::Moose;
 use Data::Dumper;
 use Capture::Tiny qw( capture_stderr );
+use Type::Tiny::XS 0.010;
 use Types::Standard -types;
 use	lib 
 		'../../../../lib',;
