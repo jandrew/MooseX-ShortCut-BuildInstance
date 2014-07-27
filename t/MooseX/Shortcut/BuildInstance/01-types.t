@@ -1,6 +1,7 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance::Types       7#########8#########9
 #!perl
 BEGIN{
+	$ENV{PERL_TYPE_TINY_XS} = 0;
 	#~ $ENV{ Smart_Comments } = '### ####'; #####
 }
 if( $ENV{ Smart_Comments } ){
@@ -11,13 +12,13 @@ $| = 1;
 
 use	Test::Most tests => 40;
 use	Test::Moose;
-use Data::Dumper;
+use	Data::Dumper;
+no	Type::Tiny::XS;
 use Capture::Tiny qw( capture_stderr );
-use Type::Tiny::XS 0.010;
 use Types::Standard -types;
 use	lib 
 		'../../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types v1.16 qw(
+use MooseX::ShortCut::BuildInstance::Types v1.22 qw(
 		NameSpace
 		SuperClassesList
 		RolesList
@@ -135,7 +136,7 @@ like		$@, $answer_ref->[$_],
 							"... and check for the correct error message";
 			} ( 21..23 );
 explain 								"...Test Done";
-done_testing();
+done_testing(40);
 
 package Test::Role;
 use Moose::Role;

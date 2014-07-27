@@ -1,5 +1,5 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = qv("v1.22.4");
+use version; our $VERSION = qv("v1.22.6");
 use strict;
 use warnings;
 use Data::Dumper;

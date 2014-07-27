@@ -47,9 +47,9 @@ my %WriteMakefileArgs = (
     "Test::More" => 0,
     "Test::Most" => 0,
     "Test::Requires" => 0,
-    "Type::Tiny::XS" => "0.010"
+    "Type::Tiny::XS" => 0
   },
-  "VERSION" => "v1.22.4",
+  "VERSION" => "v1.22.6",
   "test" => {
     "TESTS" => "t/*.t t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }
@@ -75,7 +75,7 @@ my %FallbackPrereqs = (
   "Test::Most" => 0,
   "Test::Requires" => 0,
   "Type::Library" => "0.046",
-  "Type::Tiny::XS" => "0.010",
+  "Type::Tiny::XS" => 0,
   "Type::Utils" => 0,
   "Types::Standard" => 0,
   "lib" => 0,

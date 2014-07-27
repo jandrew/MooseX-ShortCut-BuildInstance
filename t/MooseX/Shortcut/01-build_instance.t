@@ -1,7 +1,8 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance    6#########7#########8#########9
 #!perl
 BEGIN{
-	#~ $ENV{ Smart_Comments } = '### #### #####';
+	$ENV{PERL_TYPE_TINY_XS} = 0;
+	#~ $ENV{ Smart_Comments } = '### ####'; #####
 }
 if( $ENV{ Smart_Comments } ){
 	use Smart::Comments -ENV;
@@ -19,7 +20,7 @@ use Types::Standard -types;
 use	lib 
 		'../../../lib',
 		'../../', 'lib', 't';
-use MooseX::ShortCut::BuildInstance;
+use MooseX::ShortCut::BuildInstance v1.22;
 my( 
 			$pet_rock_class, $paco, $pacos_evil_twin, $pacos_good_twin, 
 			$anonymous_class, $anonymous_instance,
@@ -194,4 +195,4 @@ ok			$pet_rock_class->can( 'type_of_mineral' ),
 lives_ok{ 	$anonymous_instance = build_instance() }
 										"Attempt an anonymous instance (without any superclass or role)";
 explain 								"...Test Done";
-done_testing();
+done_testing(40);
