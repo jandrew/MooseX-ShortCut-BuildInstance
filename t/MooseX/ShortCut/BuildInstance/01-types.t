@@ -2,6 +2,7 @@
 #!perl
 BEGIN{
 	$ENV{PERL_TYPE_TINY_XS} = 0;
+	$ENV{PERL_ONLY} = 1;
 	#~ $ENV{ Smart_Comments } = '### ####'; #####
 }
 if( $ENV{ Smart_Comments } ){
@@ -10,15 +11,15 @@ if( $ENV{ Smart_Comments } ){
 }
 $| = 1;
 
+no	Type::Tiny::XS;
 use	Test::Most tests => 40;
 use	Test::Moose;
 use	Data::Dumper;
-no	Type::Tiny::XS;
 use Capture::Tiny qw( capture_stderr );
-use Types::Standard -types;
+use Types::Standard 0.046 -types;
 use	lib 
 		'../../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types v1.22 qw(
+use MooseX::ShortCut::BuildInstance::Types v1.24 qw(
 		NameSpace
 		SuperClassesList
 		RolesList

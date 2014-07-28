@@ -1,6 +1,6 @@
 #!perl
 ### Test that the module(s) load!(s)
-use	Test::More tests => 12;
+use	Test::More tests => 13 ;
 use	Test::Requires "v5.10";
 use Data::Dumper;
 BEGIN{ use_ok( version ) };
@@ -10,7 +10,9 @@ BEGIN{ use_ok( Moose::Meta::Class ) };
 BEGIN{ use_ok( Data::Dumper ) };
 BEGIN{ use_ok( Carp, 'cluck' ) };
 BEGIN{ use_ok( Moose::Exporter ) };
-BEGIN{ $ENV{PERL_TYPE_TINY_XS} = 0; }
+BEGIN{ $ENV{PERL_TYPE_TINY_XS} = 0; };
+BEGIN{ $ENV{PERL_ONLY} = 1; };
+BEGIN{ use_ok( Type::Tiny, 0.046 ) };
 BEGIN{ use_ok( Type::Utils, '-all' ) };
 BEGIN{ use_ok( Types::Standard, '-types' ) };
 BEGIN{ use_ok( Type::Library,
@@ -24,6 +26,6 @@ BEGIN{ use_ok( Type::Library,
 		BuildClassDict
 	) ) };
 use lib '../lib', 'lib',;
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.020 ) };
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.020 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.024 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.024 ) };
 done_testing();

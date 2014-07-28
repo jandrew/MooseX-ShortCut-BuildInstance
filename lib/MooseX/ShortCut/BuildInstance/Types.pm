@@ -1,9 +1,9 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = qv("v1.22.6");
+use version; our $VERSION = qv("v1.24.2");
 use strict;
 use warnings;
 use Data::Dumper;
-use Type::Utils -all;
+use Type::Utils 0.046 -all;
 use Type::Library 0.046
 	-base,
 	-declare => qw(
@@ -15,7 +15,11 @@ use Type::Library 0.046
 		BuildClassDict
 	);
 use Types::Standard -types;
-if( exists $INC{'Type/Tiny/XS.pm'} ){
+my $try_xs =
+		exists($ENV{PERL_TYPE_TINY_XS}) ? !!$ENV{PERL_TYPE_TINY_XS} :
+		exists($ENV{PERL_ONLY})         ?  !$ENV{PERL_ONLY} :
+		1;
+if( $try_xs and exists $INC{'Type/Tiny/XS.pm'} ){
 	eval "use Type::Tiny::XS 0.010";
 	if( $@ ){
 		die "You have loaded Type::Tiny::XS but versions prior to 0.010 will cause this module to fail";

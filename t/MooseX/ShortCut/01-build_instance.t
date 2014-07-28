@@ -2,6 +2,7 @@
 #!perl
 BEGIN{
 	$ENV{PERL_TYPE_TINY_XS} = 0;
+	$ENV{PERL_ONLY} = 1;
 	#~ $ENV{ Smart_Comments } = '### ####'; #####
 }
 if( $ENV{ Smart_Comments } ){
@@ -9,18 +10,19 @@ if( $ENV{ Smart_Comments } ){
 	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
 }
 
+no	Type::Tiny::XS;
 use Test::Most tests => 40;
 use Test::Moose;
 use Capture::Tiny 0.12 qw(
 		capture_stderr
 	);
 use Data::Dumper;
-use Types::Standard -types;
+use Types::Standard 0.046 -types;
 
 use	lib 
 		'../../../lib',
 		'../../', 'lib', 't';
-use MooseX::ShortCut::BuildInstance v1.22;
+use MooseX::ShortCut::BuildInstance v1.24;
 my( 
 			$pet_rock_class, $paco, $pacos_evil_twin, $pacos_good_twin, 
 			$anonymous_class, $anonymous_instance,

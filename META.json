@@ -36,8 +36,8 @@
             "Moose::Util" : "0",
             "Smart::Comments" : "0",
             "Type::Library" : "0.046",
-            "Type::Utils" : "0",
-            "Types::Standard" : "0",
+            "Type::Utils" : "0.046",
+            "Types::Standard" : "0.046",
             "lib" : "0",
             "perl" : "5.010",
             "strict" : "0",
@@ -64,11 +64,11 @@
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.22.6"
+         "version" : "v1.24.2"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.22.6"
+         "version" : "v1.24.2"
       }
    },
    "release_status" : "stable",
@@ -83,7 +83,7 @@
          "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.22.6",
+   "version" : "v1.24.2",
    "x_authority" : "cpan:JANDREW"
 }
 
