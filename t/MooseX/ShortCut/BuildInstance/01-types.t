@@ -2,7 +2,6 @@
 #!perl
 BEGIN{
 	$ENV{PERL_TYPE_TINY_XS} = 0;
-	$ENV{PERL_ONLY} = 1;
 	#~ $ENV{ Smart_Comments } = '### ####'; #####
 }
 if( $ENV{ Smart_Comments } ){
@@ -11,7 +10,6 @@ if( $ENV{ Smart_Comments } ){
 }
 $| = 1;
 
-no	Type::Tiny::XS;
 use	Test::Most tests => 40;
 use	Test::Moose;
 use	Data::Dumper;

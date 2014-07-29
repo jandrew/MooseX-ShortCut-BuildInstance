@@ -1,6 +1,6 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.24.2");
+use version; our $VERSION = qv("v1.26.2");
 use 5.010;
 use Moose;
 use Moose::Meta::Class;
@@ -20,7 +20,7 @@ Moose::Exporter->setup_import_methods(
 );
 use Data::Dumper;
 use lib	'../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types v1.24 qw(
+use MooseX::ShortCut::BuildInstance::Types v1.26 qw(
 		BuildClassDict
 	);
 if( $ENV{ Smart_Comments } ){
