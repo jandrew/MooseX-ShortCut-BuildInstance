@@ -221,7 +221,7 @@ the newly created class.
 
 =back
 
-=head3 should_re_use_classes( $bool )
+=head2 should_re_use_classes( $bool )
 
 =over
 
@@ -231,7 +231,7 @@ L<MooseX::ShortCut::BuildInstance::re_use_classes
 
 =back
 
-=head3 set_class_immutability( $bool )
+=head2 set_class_immutability( $bool )
 
 =over
 
@@ -243,7 +243,7 @@ L<MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 =head1 GLOBAL VARIABLES
 
-=head4 $ENV{Smart_Comments}
+=head2 $ENV{Smart_Comments}
 
 The module uses L<Smart::Comments|https://metacpan.org/module/Smart::Comments> 
 if the '-ENV' option is set.  The 'use' is encapsulated in an 'if' block 
@@ -256,12 +256,12 @@ There are three levels of 'Smartness' available in this module '### #### #####'.
 This is an integer that increments and appends to the anonymous package name 
 for each new anonymous package (class) created.
 
-=head4 $MooseX::ShortCut::BuildInstance::built_classes
+=head2 $MooseX::ShortCut::BuildInstance::built_classes
 
 This is a hashref that tracks the class names ('package's) built buy this class 
 to manage duplicate build behaviour.
 
-=head4 $MooseX::ShortCut::BuildInstance::re_use_classes
+=head2 $MooseX::ShortCut::BuildInstance::re_use_classes
 
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
@@ -269,7 +269,7 @@ If the package name is overwritten it will L<cluck|https://metacpan.org/pod/Carp
 in warning.  The class reuse behaviour can be changed with the exported method 
 L<should_re_use_classes|/should_re_use_classes( $bool )>.
 
-=head4 $MooseX::ShortCut::BuildInstance::make_classes_immutable
+=head2 $MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 This is a boolean (1|0) variable that manages whether a class is immutabilized at the end of 
 creation.  This can be changed with the exported method L<set_class_immutability

@@ -5,7 +5,7 @@ use	Test::Requires "v5.10";
 use Data::Dumper;
 BEGIN{ use_ok( version ) };
 BEGIN{ use_ok( Test::Moose ) };
-BEGIN{ use_ok( Moose ) };
+BEGIN{ use_ok( Moose, 2.1213 ) };
 BEGIN{ use_ok( Moose::Meta::Class ) };
 BEGIN{ use_ok( Data::Dumper ) };
 BEGIN{ use_ok( Carp, 'cluck' ) };

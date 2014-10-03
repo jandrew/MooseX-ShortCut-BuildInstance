@@ -23,7 +23,7 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Carp" => 0,
     "Data::Dumper" => 0,
-    "Moose" => 0,
+    "Moose" => "2.1213",
     "Moose::Exporter" => 0,
     "Moose::Meta::Class" => 0,
     "Moose::Util" => 0,
@@ -48,7 +48,7 @@ my %WriteMakefileArgs = (
     "Test::Most" => 0,
     "Test::Requires" => 0
   },
-  "VERSION" => "v1.26.2",
+  "VERSION" => "v1.28.2",
   "test" => {
     "TESTS" => "t/*.t t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }
@@ -59,7 +59,7 @@ my %FallbackPrereqs = (
   "Capture::Tiny" => "0.12",
   "Carp" => 0,
   "Data::Dumper" => 0,
-  "Moose" => 0,
+  "Moose" => "2.1213",
   "Moose::Exporter" => 0,
   "Moose::Meta::Class" => 0,
   "Moose::Role" => 0,

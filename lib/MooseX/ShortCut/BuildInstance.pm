@@ -1,8 +1,8 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version; our $VERSION = qv("v1.26.2");
+use version; our $VERSION = qv("v1.28.2");
 use 5.010;
-use Moose;
+use Moose 2.1213;
 use Moose::Meta::Class;
 use Types::Standard 0.046 qw(
 		Bool
@@ -402,7 +402,7 @@ the newly created class.
 
 =back
 
-=head3 should_re_use_classes( $bool )
+=head2 should_re_use_classes( $bool )
 
 =over
 
@@ -412,7 +412,7 @@ L<MooseX::ShortCut::BuildInstance::re_use_classes
 
 =back
 
-=head3 set_class_immutability( $bool )
+=head2 set_class_immutability( $bool )
 
 =over
 
@@ -432,17 +432,17 @@ triggered by the environmental variable to comfort non-believers.  Setting the
 variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
 There are three levels of 'Smartness' available in this module '### #### #####'.
 
-=head4 $MooseX::ShortCut::BuildInstance::anonymous_class_count
+=head2 $MooseX::ShortCut::BuildInstance::anonymous_class_count
 
 This is an integer that increments and appends to the anonymous package name 
 for each new anonymous package (class) created.
 
-=head4 $MooseX::ShortCut::BuildInstance::built_classes
+=head2 $MooseX::ShortCut::BuildInstance::built_classes
 
 This is a hashref that tracks the class names ('package's) built buy this class 
 to manage duplicate build behaviour.
 
-=head4 $MooseX::ShortCut::BuildInstance::re_use_classes
+=head2 $MooseX::ShortCut::BuildInstance::re_use_classes
 
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
@@ -450,7 +450,7 @@ If the package name is overwritten it will L<cluck|https://metacpan.org/pod/Carp
 in warning.  The class reuse behaviour can be changed with the exported method 
 L<should_re_use_classes|/should_re_use_classes( $bool )>.
 
-=head4 $MooseX::ShortCut::BuildInstance::make_classes_immutable
+=head2 $MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 This is a boolean (1|0) variable that manages whether a class is immutabilized at the end of 
 creation.  This can be changed with the exported method L<set_class_immutability
