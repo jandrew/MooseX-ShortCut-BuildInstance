@@ -1,12 +1,12 @@
 #########1 Main Package       3#########4#########5#########6#########7#########8#########9
 package MooseX::ShortCut::BuildInstance;
-use version 0.9909; our $VERSION = qv("v1.28.6");
+# ABSTRACT: A shortcut to build Moose instances
+
+use version 0.77; our $VERSION = qv("v1.32.2");
 use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
-use Types::Standard 0.046 qw(
-		Bool
-    );
+use Types::Standard 0.046 qw( Bool );
 use Carp qw( cluck );
 use Moose::Util qw( apply_all_roles );
 use Moose::Exporter;
@@ -23,10 +23,9 @@ use lib	'../../../lib',;
 use MooseX::ShortCut::BuildInstance::Types 1.028 qw(
 		BuildClassDict
 	);
-if( $ENV{ Smart_Comments } ){
-	use Smart::Comments -ENV;
-	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance  ...
-}
+use MooseX::ShortCut::BuildInstance::UnhideDebug;
+###LogSD warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance!";
+###LogSD use Log::Shiras::Telephone;
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
@@ -49,14 +48,19 @@ my 	@add_class_args = qw(
 
 sub build_class{
 	### <where> - arrived at build_class ...
-	### <where> - with
 	
 	my	$args = ( scalar( @_ ) == 1 ) ? $_[0] : { @_ };
+	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	###LogSD					name_space 	=> 'build_class', );
+	###LogSD		$phone->talk( level => 'info', message =>[
+	###LogSD			"Arrived at build_class with args:", $args, ] );
 	my ( $class_args, $i, $can_build, $warning, @warn_list, $pre_exists );
 	for my $key ( @init_class_args ){
-		### <where> - processing the class argument: $key
+		###LogSD	$phone->talk( level => 'debug', message =>[
+		###LogSD		"Processing the class argument: $key", ] );
 		if( exists $args->{$key} ){
-			### <where> - processing the value: $args->{$key}
+			###LogSD	$phone->talk( level => 'debug', message =>[
+			###LogSD		'Processing the values:', $args->{$key}, ] );
 			$class_args->{$key} = $args->{$key};
 			if( $key eq 'package' ){
 				if( $built_classes->{$args->{$key}} ){
@@ -64,7 +68,8 @@ sub build_class{
 					if( !$re_use_classes ){
 						push @warn_list, 'You already built the class: ' . $args->{$key};
 						$warning = 1;
-						### <where> - unmutablizing the class ...
+						###LogSD	$phone->talk( level => 'warn', message =>[
+						###LogSD		"unmutablizing the class ...", @warn_list ] );
 						$args->{$key}->meta->make_mutable;
 					}
 				}
@@ -72,39 +77,45 @@ sub build_class{
 			}
 			delete $args->{$key};
 		}elsif( $key eq 'package' ){
-			### <where> - missing a package value ...
 			$class_args->{$key} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . ++$anonymous_class_count;
+			###LogSD	$phone->talk( level => 'warn', message =>[
+			###LogSD		"missing a package value - using: " . $class_args->{$key} ] );
 		}elsif( $key eq 'superclasses' ){
 			### <where> - missing the superclass ...
 			$class_args->{$key} = [ 'Anonymous::Shiras::Moose::Class' ],
+			###LogSD	$phone->talk( level => 'warn', message =>[
+			###LogSD		"missing the superclass value - using: " . $class_args->{$key} ] );
 		}
 	}
 	if( $warning ){
 		push @warn_list, 'The old class definitions will be overwritten with args:', Dumper( $class_args );
 		cluck( join( "\n", @warn_list ) );
+		###LogSD	$phone->talk( level => 'warn', message =>[
+		###LogSD		'The old class definitions will be overwritten with args:',  $class_args ] );
 	}
 	my $want_array = ( caller(0) )[5];
-	### <where> - class args: $class_args
-	### <where> - remaining arguments: $args
-	### <where> - want array: $want_array
-	### <where> - Pre exists state: $pre_exists
-	### <where> - $warning state: $warning
-	### <where> - finalize the class name or load a new one ...
+	###LogSD	$phone->talk( level => 'trace', message =>[
+	###LogSD		'class args:', $class_args, 'remaining arguments:', $args,
+	###LogSD		"want array: $want_array", "Pre exists state: " . ($pre_exists//''), 
+	###LogSD		"\$warning state: " . ($warning//''),	'finalize the class name or load a new one ...' ] );
 	my	$class_name = ( $pre_exists and !$warning ) ?
 			$class_args->{package} :
 			Moose::Meta::Class->create( %{$class_args} )->name;
-	### <where> - class to this point: $class_name->dump( 2 )
+	###LogSD	$phone->talk( level => 'debug', message =>[
+	###LogSD		'class to this point: ' . $class_name->dump( 2 ) ] );
 	if( !$class_name->meta->is_mutable and
 		(	exists $args->{add_attributes} or
 			exists $args->{add_methods} or
 			exists $args->{add_roles_in_sequence} ) ){
-		### <where> - unmutablizing the class ...
+		###LogSD	$phone->talk( level => 'info', message =>[
+		###LogSD		'Unmutablizing the class ...' ] );
 		$class_name->meta->make_mutable;
 	}
 	if( exists $args->{add_attributes} ){
 		my	$meta = $class_name->meta;
 		for my $attribute ( keys %{$args->{add_attributes}} ){
-			### <where> - adding attribute named: $attribute
+			###LogSD	$phone->talk( level => 'debug', message =>[
+			###LogSD		"adding attribute named: $attribute" ] );
 			$meta->add_attribute( $attribute => $args->{add_attributes}->{$attribute} );
 		}
 		delete $args->{add_attributes};
@@ -112,29 +123,35 @@ sub build_class{
 	if( exists $args->{add_methods} ){
 		my	$meta = $class_name->meta;
 		for my $method ( keys %{$args->{add_methods}} ){
-			### <where> - adding method named: $method
+			###LogSD	$phone->talk( level => 'debug', message =>[
+			###LogSD		"adding method named: $method" ] );
 			$meta->add_method( $method => $args->{add_methods}->{$method} );
 		}
 		delete $args->{add_methods};
 	}
 	if( exists $args->{add_roles_in_sequence} ){
 		for my $role ( @{$args->{add_roles_in_sequence}} ){
-			### <where> - adding role: $role
+			###LogSD	$phone->talk( level => 'debug', message =>[ "adding role: $role" ] );
 			apply_all_roles( $class_name, $role );
 		}
 		delete $args->{add_roles_in_sequence};
 	}
 	if( $make_classes_immutable ){
-		### <where> - Immutablizing the class ...
+		###LogSD	$phone->talk( level => 'info', message =>[
+		###LogSD		'Immutablizing the class ...' ] );
 		$class_name->meta->make_immutable;
 	}
+	###LogSD	$phone->talk( level => 'info', message =>[
+	###LogSD		"returning: $class_name" ] );
 	return $class_name;
 }
 
 sub build_instance{
 	my	$args = ( ref $_[0] eq 'HASH' ) ? $_[0] : { @_ };
-	### <where> - reached build_instance ...
-	##### <where> - passed arguments: $args
+	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	###LogSD					name_space 	=> 'build_instance', );
+	###LogSD		$phone->talk( level => 'info', message =>[
+	###LogSD			"Arrived at build_instance with args:", $args, ] );
 	my	$class_args;
 	for my $key ( @init_class_args, @add_class_args ){
 		if( exists $args->{$key} ){
@@ -142,23 +159,41 @@ sub build_instance{
 			delete $args->{$key};
 		}
 	}
-	##### <where> - reduced arguments: $args
-	##### <where> - class building arguments: $class_args
+	###LogSD	$phone->talk( level => 'trace', message =>[
+	###LogSD		'Reduced arguments:', $args,
+	###LogSD		'Class building arguments:', $class_args, ] );
 	my $class = build_class( $class_args );
-	my	$instance = $class->new( $args );
-	##### <where> - instance: $instance
-	return $instance;
+	###LogSD	$phone->talk( level => 'trace', message =>[
+	###LogSD		"Built class name: $class",
+	###LogSD		"To get instance now applying args:", $args, ] );
+	my $instance;
+	eval '$instance = $class->new( %$args )';
+	if( $@ ){
+		###LogSD	$phone->talk( level => 'fatal', message =>[
+		###LogSD		"Failed to build -$class- for: " . $@->as_string, ] );
+		warn $@->as_string;
+	}else{
+		###LogSD	$phone->talk( level => 'trace', message =>[
+		###LogSD		"Built instance:", $instance, ] );
+		return $instance;
+	}
 }
 
 sub should_re_use_classes{
 	my ( $bool, ) = @_;
-	### <where> - setting $re_use_classes to; $bool
+	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	###LogSD					name_space 	=> 'should_re_use_classes', );
+	###LogSD		$phone->talk( level => 'info', message =>[
+	###LogSD			"setting \$re_use_classes to: $bool", ] );
 	$re_use_classes = ( $bool ) ? 1 : 0 ;
 }
 
 sub set_class_immutability{
 	my ( $bool, ) = @_;
-	### <where> - setting $make_immutable_classes to; $bool
+	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	###LogSD					name_space 	=> 'set_class_immutability', );
+	###LogSD		$phone->talk( level => 'info', message =>[
+	###LogSD			"setting \$make_immutable_classes to; $bool", ] );
 	$make_classes_immutable = ( $bool ) ? 1 : 0 ;
 }
 
@@ -225,13 +260,16 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 
 This module is a shortcut to custom build L<Moose> class instances on the fly.  
 The goal is to compose unique instances of Moose classes on the fly using a single 
-set of information describing defininition for attributes, methods, inherited classes 
-and roles as well as any instance settings to apply in a 
+function call with information describing required attributes, methods, inherited 
+classes, and roles as well as any instance settings to apply in a 
 L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
 This package will check for and fill in any missing pieces as needed so that your 
 call can either be complex or very simple.  The goal is to provide configurable 
 instance building without stringing together a series of Class-E<gt>method( %args ) 
 calls.
+
+The package can also be used as a class factory with the L<should_re_use_classes
+|/$MooseX::ShortCut::BuildInstance::re_use_classes> method.
 
 Even though this is a Moose based class it provides a functional interface.
 
@@ -252,7 +290,7 @@ the same class (by 'package' name) with different attribute settings but built
 with the same functionality then you need to understand the purpose of the 
 L<$re_use_classes|/$MooseX::ShortCut::BuildInstance::re_use_classes> global variable.  
 An alternative to multiple calls straight to 'build_instance' is to call 
-L<build_class|/build_class( %args|\%args )> separatly and then just call -E<gt>new 
+L<build_class|/build_class( %args|\%args )> separately and then just call -E<gt>new 
 against the resulting class name over and over again.  Another alternative is to 
 leave the 'package' argument out of 'build_instance' and let this class create a 
 unique by-instance anonymous class/package name.
@@ -424,14 +462,6 @@ L<MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 =head1 GLOBAL VARIABLES
 
-=head4 $ENV{Smart_Comments}
-
-The module uses L<Smart::Comments|https://metacpan.org/module/Smart::Comments> 
-if the '-ENV' option is set.  The 'use' is encapsulated in an 'if' block 
-triggered by the environmental variable to comfort non-believers.  Setting the 
-variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
-There are three levels of 'Smartness' available in this module '### #### #####'.
-
 =head2 $MooseX::ShortCut::BuildInstance::anonymous_class_count
 
 This is an integer that increments and appends to the anonymous package name 
@@ -447,14 +477,66 @@ to manage duplicate build behaviour.
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
 If the package name is overwritten it will L<cluck|https://metacpan.org/pod/Carp#SYNOPSIS> 
-in warning.  The class reuse behaviour can be changed with the exported method 
-L<should_re_use_classes|/should_re_use_classes( $bool )>.
+in warning since any changes will affect active instances of prior class builds 
+with the same name.  If you wish to avoid changing old built behaviour at the risk 
+of not installing new behaviour then set this variable to true.  I<No warning will 
+be provided if new requested class behaviour is discarded.> The class reuse behaviour 
+can be changed with the exported method L<should_re_use_classes
+|/should_re_use_classes( $bool )>.
+
+=over
+
+B<Default:> False = warn then overwrite
+
+=back
 
 =head2 $MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 This is a boolean (1|0) variable that manages whether a class is immutabilized at the end of 
 creation.  This can be changed with the exported method L<set_class_immutability
 |/set_class_immutability( $bool )>.
+
+=head1 Build/Install from Source
+
+=over
+	
+B<1.> Download a compressed file with the code
+	
+B<2.> Extract the code from the compressed file.
+
+=over
+
+If you are using tar this should work:
+
+	tar -zxvf Spreadsheet-XLSX-Reader-LibXML-v0.xx.tar.gz
+	
+=back
+
+B<3.> Change (cd) into the extracted directory
+
+B<4.> Run the following
+
+=over
+
+(For Windows find what version of make was used to compile your perl)
+
+	perl  -V:make
+	
+(for Windows below substitute the correct make function (s/make/dmake/g)?)
+	
+=back
+
+	>perl Makefile.PL
+
+	>make
+
+	>make test
+
+	>make install # As sudo/root
+
+	>make clean
+	
+=back
 
 =head1 SUPPORT
 
@@ -468,15 +550,7 @@ L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCu
 
 =over
 
-B<1.> Swap L<Smart::Comments|https://metacpan.org/module/Smart::Comments> 
-for L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
-
-=over
-
-My first attempt ran into some deep recursion issues since this is used 
-heavily in my development of Log::Shiras already.
-
-=back
+B<1.> Pending ideas
 
 =back
 
@@ -498,7 +572,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013 by Jed Lund
+This software is copyrighted (c) 2012, 2013, 2014 by Jed Lund
 
 =head1 Dependencies
 
@@ -521,7 +595,7 @@ L<Moose::Util> - apply_all_roles
 
 L<Moose::Exporter>
 
-L<Type::Tiny>
+L<Type::Tiny> - 0.046
 
 L<Data::Dumper>
 
@@ -539,8 +613,16 @@ L<Moose::Util> ->with_traits
 
 L<MooseX::ClassCompositor>
 
-L<Smart::Comments> - 
-is used if the -ENV option is set
+L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
+
+=over
+
+This package does not use Log::Shiras functionality by default.  The functionality is 
+only turned on if the variable $ENV{log_shiras_filter_on} is set to true.  Otherwise 
+all the Log::Shiras code is hidden as comments.  See 
+L<MooseX::ShortCut::BuildInstance::UnhideDebug> for more information.
+
+=back
 
 =back
 

@@ -1,6 +1,6 @@
 #!perl
 ### Test that the module(s) load!(s)
-use	Test::More tests => 13 ;
+use	Test::More tests => 14 ;
 use	Test::Requires "v5.10";
 use Data::Dumper;
 BEGIN{ use_ok( version ) };
@@ -25,6 +25,7 @@ BEGIN{ use_ok( Type::Library,
 		BuildClassDict
 	) ) };
 use lib '../lib', 'lib',;
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.026 ) };
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.026 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::UnhideDebug, 1.032 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.032 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.032 ) };
 done_testing();

@@ -1,5 +1,5 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = qv("v1.28.6");
+use version; our $VERSION = qv("v1.32.2");
 use strict;
 use warnings;
 use Data::Dumper;
@@ -24,9 +24,6 @@ if( $try_xs and exists $INC{'Type/Tiny/XS.pm'} ){
 	if( $@ ){
 		die "You have loaded Type::Tiny::XS but versions prior to 0.010 will cause this module to fail";
 	}
-}
-if( $ENV{ Smart_Comments } ){
-	use Smart::Comments -ENV;#'###'
 }
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9

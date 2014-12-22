@@ -1,6 +1,8 @@
-=head1 MooseX::ShortCut::BuildInstance
+=pod
 
-This module is a shortcut to build L<Moose> instances on the fly.
+=head1 NAME
+
+MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 
 =head1 SYNOPSIS
     
@@ -44,13 +46,16 @@ This module is a shortcut to build L<Moose> instances on the fly.
 
 This module is a shortcut to custom build L<Moose> class instances on the fly.  
 The goal is to compose unique instances of Moose classes on the fly using a single 
-set of information describing defininition for attributes, methods, inherited classes 
-and roles as well as any instance settings to apply in a 
+function call with information describing required attributes, methods, inherited 
+classes, and roles as well as any instance settings to apply in a 
 L<DCI|https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction> fashion.  
 This package will check for and fill in any missing pieces as needed so that your 
 call can either be complex or very simple.  The goal is to provide configurable 
 instance building without stringing together a series of Class-E<gt>method( %args ) 
 calls.
+
+The package can also be used as a class factory with the L<should_re_use_classes
+|/$MooseX::ShortCut::BuildInstance::re_use_classes> method.
 
 Even though this is a Moose based class it provides a functional interface.
 
@@ -71,7 +76,7 @@ the same class (by 'package' name) with different attribute settings but built
 with the same functionality then you need to understand the purpose of the 
 L<$re_use_classes|/$MooseX::ShortCut::BuildInstance::re_use_classes> global variable.  
 An alternative to multiple calls straight to 'build_instance' is to call 
-L<build_class|/build_class( %args|\%args )> separatly and then just call -E<gt>new 
+L<build_class|/build_class( %args|\%args )> separately and then just call -E<gt>new 
 against the resulting class name over and over again.  Another alternative is to 
 leave the 'package' argument out of 'build_instance' and let this class create a 
 unique by-instance anonymous class/package name.
@@ -243,15 +248,7 @@ L<MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 =head1 GLOBAL VARIABLES
 
-=head2 $ENV{Smart_Comments}
-
-The module uses L<Smart::Comments|https://metacpan.org/module/Smart::Comments> 
-if the '-ENV' option is set.  The 'use' is encapsulated in an 'if' block 
-triggered by the environmental variable to comfort non-believers.  Setting the 
-variable $ENV{Smart_Comments} will load and turn on smart comment reporting.  
-There are three levels of 'Smartness' available in this module '### #### #####'.
-
-=head4 $MooseX::ShortCut::BuildInstance::anonymous_class_count
+=head2 $MooseX::ShortCut::BuildInstance::anonymous_class_count
 
 This is an integer that increments and appends to the anonymous package name 
 for each new anonymous package (class) created.
@@ -266,14 +263,66 @@ to manage duplicate build behaviour.
 This is a boolean (1|0) variable that tracks if the class should overwrite or 
 re-use a package name (and the defined class) from a prior 'build_class' call.  
 If the package name is overwritten it will L<cluck|https://metacpan.org/pod/Carp#SYNOPSIS> 
-in warning.  The class reuse behaviour can be changed with the exported method 
-L<should_re_use_classes|/should_re_use_classes( $bool )>.
+in warning since any changes will affect active instances of prior class builds 
+with the same name.  If you wish to avoid changing old built behaviour at the risk 
+of not installing new behaviour then set this variable to true.  I<No warning will 
+be provided if new requested class behaviour is discarded.> The class reuse behaviour 
+can be changed with the exported method L<should_re_use_classes
+|/should_re_use_classes( $bool )>.
+
+=over
+
+B<Default:> False = warn then overwrite
+
+=back
 
 =head2 $MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 This is a boolean (1|0) variable that manages whether a class is immutabilized at the end of 
 creation.  This can be changed with the exported method L<set_class_immutability
 |/set_class_immutability( $bool )>.
+
+=head1 Build/Install from Source
+
+=over
+	
+B<1.> Download a compressed file with the code
+	
+B<2.> Extract the code from the compressed file.
+
+=over
+
+If you are using tar this should work:
+
+	tar -zxvf Spreadsheet-XLSX-Reader-LibXML-v0.xx.tar.gz
+	
+=back
+
+B<3.> Change (cd) into the extracted directory
+
+B<4.> Run the following
+
+=over
+
+(For Windows find what version of make was used to compile your perl)
+
+	perl  -V:make
+	
+(for Windows below substitute the correct make function (s/make/dmake/g)?)
+	
+=back
+
+	>perl Makefile.PL
+
+	>make
+
+	>make test
+
+	>make install # As sudo/root
+
+	>make clean
+	
+=back
 
 =head1 SUPPORT
 
@@ -287,15 +336,7 @@ L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCu
 
 =over
 
-B<1.> Swap L<Smart::Comments|https://metacpan.org/module/Smart::Comments> 
-for L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
-
-=over
-
-My first attempt ran into some deep recursion issues since this is used 
-heavily in my development of Log::Shiras already.
-
-=back
+B<1.> Pending ideas
 
 =back
 
@@ -317,7 +358,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2013 by Jed Lund
+This software is copyrighted (c) 2012, 2013, 2014 by Jed Lund
 
 =head1 Dependencies
 
@@ -340,7 +381,7 @@ L<Moose::Util> - apply_all_roles
 
 L<Moose::Exporter>
 
-L<Type::Tiny>
+L<Type::Tiny> - 0.046
 
 L<Data::Dumper>
 
@@ -358,40 +399,17 @@ L<Moose::Util> ->with_traits
 
 L<MooseX::ClassCompositor>
 
-L<Smart::Comments> - 
-is used if the -ENV option is set
-
-=back
-
-=head1 Build/Install from Source
+L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
 
 =over
-	
-B<1.> Download a compressed file with the code
-	
-B<2.> Extract the code from the compressed file.  If you are using tar this should work:
 
-        tar -zxvf MooseX-ShortCut-BuildInstance-v1.xx.tar.gz
-
-B<3.> Change (cd) into the extracted directory
+This package does not use Log::Shiras functionality by default.  The functionality is 
+only turned on if the variable $ENV{log_shiras_filter_on} is set to true.  Otherwise 
+all the Log::Shiras code is hidden as comments.  See 
+L<MooseX::ShortCut::BuildInstance::UnhideDebug> for more information.
 
 =back
 
-(For Windows find what version of make was used to compile your perl)
+=back
 
-	perl  -V:make
-
-Then
-(for Windows substitute the correct make function (s/make/dmake/g)?)
-
-	>perl Makefile.PL
-
-	>make
-
-	>make test
-
-	>make install # As sudo/root
-
-	>make clean
-	
 =cut

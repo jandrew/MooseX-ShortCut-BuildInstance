@@ -1,26 +1,32 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance    6#########7#########8#########9
-#!perl
-BEGIN{
-	$ENV{PERL_TYPE_TINY_XS} = 0;
-	#~ $ENV{ Smart_Comments } = '### ####'; #####
-}
-if( $ENV{ Smart_Comments } ){
-	use Smart::Comments -ENV;
-	### Smart-Comments turned on for MooseX-ShortCut-BuildInstance test...
-}
+#!/usr/bin/env perl
+
+$| = 1;
 
 use Test::Most tests => 40;
 use Test::Moose;
 use Capture::Tiny 0.12 qw(
 		capture_stderr
 	);
-use Data::Dumper;
 use Types::Standard 0.046 -types;
 
-use	lib 
+use	lib '../../../../Log-Shiras/lib',
 		'../../../lib',
 		'../../', 'lib', 't';
-use MooseX::ShortCut::BuildInstance v1.24;
+#~ use Log::Shiras::Switchboard v0.23 qw( :debug );#
+###LogSD	my	$operator = Log::Shiras::Switchboard->get_operator(
+###LogSD						name_space_bounds =>{
+###LogSD							UNBLOCK =>{
+###LogSD								log_file => 'trace',
+###LogSD							},
+###LogSD						},
+###LogSD						reports =>{
+###LogSD							log_file =>[ Print::Log->new ],
+###LogSD						},
+###LogSD					);
+###LogSD	use Log::Shiras::Telephone;
+###LogSD	use Log::Shiras::UnhideDebug;
+use MooseX::ShortCut::BuildInstance;
 my( 
 			$pet_rock_class, $paco, $pacos_evil_twin, $pacos_good_twin, 
 			$anonymous_class, $anonymous_instance,
@@ -37,12 +43,13 @@ my  		@exported_methods = qw(
 				set_class_immutability
 			);
 my			$answer_ref = [
-				'',#qr/The composed class passed to 'new' does not have either a 'before_method' or an 'after_method' the Role 'Data::Walk::Print' will be added/,
+				'',
 				[
 					"undef,",
 				],
 			];
-### <where> - Start with the easy questions
+###LogSD	my	$phone = Log::Shiras::Telephone->new( name_space => 'main', );
+###LogSD		$phone->talk( level => 'info', message => [ "Start with the easy questions ..." ] );
 map{ 
 has_attribute_ok
 			'MooseX::ShortCut::BuildInstance', $_,
@@ -55,7 +62,7 @@ map{
 can_ok		'main', $_,
 } 			@exported_methods;
 
-### <where> - Now the harder questions ...
+###LogSD	$phone->talk( level => 'info', message => [ "Now the harder questions..." ] );
 lives_ok{
 			$pet_rock_class = build_class(
 				package => 'Pet::Rock',
@@ -135,7 +142,7 @@ is_deeply	[ $paco->meta->superclasses ], ['Mineral'],
 										"Make sure that Paco is a Mineral class";
 is_deeply	[ $pacos_good_twin->meta->superclasses ], ['Mineral'],
 										"Make sure that Pancho (Paco's twin) is also a Mineral class";
-### <where> - Paco is: $paco
+###LogSD	$phone->talk( level => 'trace', message => [ 'Paco:', $paco ] );
 is			$paco->name, 'Paco',		"Make sure Paco knows his name";
 is			$pacos_good_twin->name, 'Pancho',
 										"Make sure Pancho knows his name";
@@ -166,11 +173,11 @@ lives_ok{
 				type_of_mineral => 'Quartz',
 			);
 }										"Build an Individual class (without a Mineral superclass)";
-### <where> - pet rock class: $pet_rock_class->meta->linearized_isa
+###LogSD	$phone->talk( level => 'trace', message => [ 'pet rock class:', $pet_rock_class->meta->linearized_isa ] );
 is			$pet_rock_class->meta->name, 'Individual',
 										"Make sure this is an Individual class";
 does_ok		$pet_rock_class, 'Identity',"Ensure the Individual really does have an Identity";
-### <where> - the isa: $pet_rock_class->isa( 'Mineral' )
+###LogSD	$phone->talk( level => 'debug', message => [ 'the isa:', $pet_rock_class->isa( 'Mineral' ) ] );
 ok			!$pet_rock_class->isa( 'Mineral'),
 										"Check that the class (doesnt) have a 'Mineral' superclass";
 ok			!$pet_rock_class->can( 'type_of_mineral' ),
@@ -182,12 +189,12 @@ lives_ok{
 				type_of_mineral => 'Quartz',
 			);
 }										"Build a Rock class (without the Identity role)";
-### <where> - pet rock class: $pet_rock_class->meta->linearized_isa
+###LogSD	$phone->talk( level => 'trace', message => [ 'pet rock class:', $pet_rock_class->meta->linearized_isa ] );
 is			$pet_rock_class->meta->name, 'Rock',
 										"Make sure this is a Rock class";
 ok			!$pet_rock_class->DOES( 'Identity' ),
 										"Ensure the Rock does not have an Identity";
-### <where> - the isa: $pet_rock_class->isa( 'Mineral' )
+###LogSD	$phone->talk( level => 'debug', message => [ 'the isa:', $pet_rock_class->isa( 'Mineral' ) ] );
 ok			$pet_rock_class->isa( 'Mineral'),
 										"Check that the class does have a 'Mineral' superclass";
 ok			$pet_rock_class->can( 'type_of_mineral' ),
@@ -196,3 +203,31 @@ lives_ok{ 	$anonymous_instance = build_instance() }
 										"Attempt an anonymous instance (without any superclass or role)";
 explain 								"...Test Done";
 done_testing(40);
+
+###LogSD	package Print::Log;
+###LogSD	use Data::Dumper;
+###LogSD	sub new{
+###LogSD		bless {}, shift;
+###LogSD	}
+###LogSD	sub add_line{
+###LogSD		shift;
+###LogSD		my @input = ( ref $_[0]->{message} eq 'ARRAY' ) ? 
+###LogSD						@{$_[0]->{message}} : $_[0]->{message};
+###LogSD		my ( @print_list, @initial_list );
+###LogSD		no warnings 'uninitialized';
+###LogSD		for my $value ( @input ){
+###LogSD			push @initial_list, (( ref $value ) ? Dumper( $value ) : $value );
+###LogSD		}
+###LogSD		for my $line ( @initial_list ){
+###LogSD			$line =~ s/\n$//;
+###LogSD			$line =~ s/\n/\n\t\t/g;
+###LogSD			push @print_list, $line;
+###LogSD		}
+###LogSD		printf( "| level - %-6s | name_space - %-s\n| line  - %04d   | file_name  - %-s\n\t:(\t%s ):\n", 
+###LogSD					$_[0]->{level}, $_[0]->{name_space},
+###LogSD					$_[0]->{line}, $_[0]->{filename},
+###LogSD					join( "\n\t\t", @print_list ) 	);
+###LogSD		use warnings 'uninitialized';
+###LogSD	}
+
+###LogSD	1;
