@@ -2,7 +2,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = qv("v1.32.2");
+use version 0.77; our $VERSION = qv("v1.34.2");
 use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
@@ -169,9 +169,18 @@ sub build_instance{
 	my $instance;
 	eval '$instance = $class->new( %$args )';
 	if( $@ ){
+		my $message = $@;
+		if( ref $message ){
+			if( $message->can( 'as_string' ) ){
+				$message = $message->as_string;
+			}elsif( $message->can( 'message' ) ){
+				$message = $message->message;
+			}
+		}
+		$message =~ s/\)\n;/\);/g;
 		###LogSD	$phone->talk( level => 'fatal', message =>[
-		###LogSD		"Failed to build -$class- for: " . $@->as_string, ] );
-		warn $@->as_string;
+		###LogSD		"Failed to build -$class- for: $message", ] );
+		warn $message;
 	}else{
 		###LogSD	$phone->talk( level => 'trace', message =>[
 		###LogSD		"Built instance:", $instance, ] );

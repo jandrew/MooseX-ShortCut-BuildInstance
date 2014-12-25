@@ -76,15 +76,15 @@
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.32.2"
+         "version" : "v1.34.2"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.32.2"
+         "version" : "v1.34.2"
       },
       "MooseX::ShortCut::BuildInstance::UnhideDebug" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/UnhideDebug.pm",
-         "version" : "v1.32.2"
+         "version" : "v1.34.2"
       }
    },
    "release_status" : "stable",
@@ -99,9 +99,10 @@
          "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.32.2",
+   "version" : "v1.34.2",
    "x_authority" : "cpan:JANDREW",
    "x_contributors" : [
+      "Jed <jandrew@cpan.org>",
       "jandrew <jandrew@cpan.org>",
       "unknown <jandrew@cpan.org>",
       "unknown <jlund@XIP-A1000540.xip.net>"

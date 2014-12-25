@@ -25,7 +25,7 @@ BEGIN{ use_ok( Type::Library,
 		BuildClassDict
 	) ) };
 use lib '../lib', 'lib',;
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::UnhideDebug, 1.032 ) };
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.032 ) };
-BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.032 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::UnhideDebug, 1.034 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance::Types, 1.034 ) };
+BEGIN{ use_ok( MooseX::ShortCut::BuildInstance, 1.034 ) };
 done_testing();

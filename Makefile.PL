@@ -58,7 +58,7 @@ my %WriteMakefileArgs = (
     "lib" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v1.32.2",
+  "VERSION" => "v1.34.2",
   "test" => {
     "TESTS" => "t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }
