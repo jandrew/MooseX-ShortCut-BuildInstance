@@ -7,7 +7,7 @@ use	Test::Most tests => 40;
 use	Test::Moose;
 use	Data::Dumper;
 use Capture::Tiny qw( capture_stderr );
-use Types::Standard 0.046 -types;
+use Types::Standard 1.000 -types;
 
 use	lib '../../../../../Log-Shiras/lib',
 		'../../../../lib',

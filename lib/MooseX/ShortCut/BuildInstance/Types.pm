@@ -1,11 +1,11 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = qv("v1.34.2");
+use version; our $VERSION = qv("v1.34.4");
 
 use strict;
 use warnings;
 use Data::Dumper;
-use Type::Utils 0.046 -all;
-use Type::Library 0.046
+use Type::Utils 1.000 -all;
+use Type::Library
 	-base,
 	-declare => qw(
 		NameSpace
@@ -220,7 +220,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2014 by Jed Lund
+This software is copyrighted (c) 2014 and 2015 by Jed Lund
 
 =head1 DEPENDENCIES
 

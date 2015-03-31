@@ -19,15 +19,13 @@ build_requires:
   Test::Moose: 0
   Test::More: 0
   Test::Most: 0
-  Type::Library: 0.046
-  Type::Utils: 0.046
-  Types::Standard: 0.046
+  Type::Tiny: 1.000
   lib: 0
   version: 0.77
 configure_requires:
   ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.132830'
+generated_by: 'Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.143240'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -44,13 +42,13 @@ no_index:
 provides:
   MooseX::ShortCut::BuildInstance:
     file: lib/MooseX/ShortCut/BuildInstance.pm
-    version: v1.34.2
+    version: v1.34.4
   MooseX::ShortCut::BuildInstance::Types:
     file: lib/MooseX/ShortCut/BuildInstance/Types.pm
-    version: v1.34.2
+    version: v1.34.4
   MooseX::ShortCut::BuildInstance::UnhideDebug:
     file: lib/MooseX/ShortCut/BuildInstance/UnhideDebug.pm
-    version: v1.34.2
+    version: v1.34.4
 requires:
   Carp: 0
   Data::Dumper: 0
@@ -58,9 +56,9 @@ requires:
   Moose::Exporter: 0
   Moose::Meta::Class: 0
   Moose::Util: 0
-  Type::Library: 0.046
-  Type::Utils: 0.046
-  Types::Standard: 0.046
+  Type::Library: 0
+  Type::Utils: 1.000
+  Types::Standard: 1.000
   lib: 0
   perl: 5.010
   strict: 0
@@ -70,7 +68,7 @@ resources:
   bugtracker: https://github.com/jandrew/MooseX-ShortCut-BuildInstance/issues
   homepage: https://github.com/jandrew/MooseX-ShortCut-BuildInstance
   repository: https://github.com/jandrew/MooseX-ShortCut-BuildInstance.git
-version: v1.34.2
+version: v1.34.4
 x_authority: cpan:JANDREW
 x_contributors:
   - 'Jed <jandrew@cpan.org>'

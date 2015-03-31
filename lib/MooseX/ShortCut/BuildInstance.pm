@@ -2,11 +2,11 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = qv("v1.34.2");
+use version 0.77; our $VERSION = qv("v1.34.4");
 use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
-use Types::Standard 0.046 qw( Bool );
+use Types::Standard 1.000 qw( Bool );
 use Carp qw( cluck );
 use Moose::Util qw( apply_all_roles );
 use Moose::Exporter;
@@ -20,7 +20,7 @@ Moose::Exporter->setup_import_methods(
 );
 use Data::Dumper;
 use lib	'../../../lib',;
-use MooseX::ShortCut::BuildInstance::Types 1.028 qw(
+use MooseX::ShortCut::BuildInstance::Types 1.034 qw(
 		BuildClassDict
 	);
 use MooseX::ShortCut::BuildInstance::UnhideDebug;
@@ -47,7 +47,6 @@ my 	@add_class_args = qw(
 #########1 Public Methods     3#########4#########5#########6#########7#########8#########9
 
 sub build_class{
-	### <where> - arrived at build_class ...
 	
 	my	$args = ( scalar( @_ ) == 1 ) ? $_[0] : { @_ };
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
@@ -226,6 +225,18 @@ __END__
 =head1 NAME
 
 MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
+
+=begin html
+
+<a href="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance"><img alt="Build Status" src="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance.png?branch=master" alt='Travis Build'/></a>
+
+<a href="https://www.perl.org"><img src="https://img.shields.io/badge/perl-5.10+-brightgreen.svg" alt="perl version"></a>
+
+<a href='https://coveralls.io/r/jandrew/MooseX-ShortCut-BuildInstance?branch=master'><img src='https://coveralls.io/repos/jandrew/MooseX-ShortCut-BuildInstance/badge.svg?branch=master' alt='Coverage Status' /></a>
+
+<a href='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance'><img src='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance.png' alt='kwalitee' height="20"/></a>
+
+=end html
 
 =head1 SYNOPSIS
     
@@ -581,7 +592,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2012, 2013, 2014 by Jed Lund
+This software is copyrighted (c) 2012, 2015 by Jed Lund
 
 =head1 Dependencies
 
@@ -604,7 +615,7 @@ L<Moose::Util> - apply_all_roles
 
 L<Moose::Exporter>
 
-L<Type::Tiny> - 0.046
+L<Type::Tiny> - 1.000
 
 L<Data::Dumper>
 

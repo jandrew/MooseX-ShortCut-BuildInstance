@@ -11,7 +11,7 @@ BEGIN{ use_ok( Data::Dumper ) };
 BEGIN{ use_ok( Carp, 'cluck' ) };
 BEGIN{ use_ok( Moose::Exporter ) };
 BEGIN{ $ENV{PERL_TYPE_TINY_XS} = 0; };
-BEGIN{ use_ok( Type::Tiny, 0.046 ) };
+BEGIN{ use_ok( Type::Tiny, 1.000 ) };
 BEGIN{ use_ok( Type::Utils, '-all' ) };
 BEGIN{ use_ok( Types::Standard, '-types' ) };
 BEGIN{ use_ok( Type::Library,
