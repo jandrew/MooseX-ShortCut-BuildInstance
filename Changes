@@ -1,15 +1,14 @@
 Revision history for {{$dist->name}}
 
-Changelog uses the following convention
-
-	+ New feature.
-	- Removed/deprecated feature.
-	! Bug fix.
-	* Place holder
+Uses the change tracking convention
++ New feature.
+- Removed/depricated feature.
+! Bug fix.
+* Place holder
 
 {{$NEXT}}
 
-	* Another cool change
+	+ Additional badge changes
 
 v1.34.4   2015-03-31 05:30:37-07:00 America/Los_Angeles
 

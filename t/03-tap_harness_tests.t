@@ -1,4 +1,4 @@
-#!perl
+#!/usr/bin/env perl
 my	$dir 	= './';
 my	$tests	= 'MooseX/ShortCut/';
 my	$up		= '../';
@@ -23,6 +23,8 @@ my	$args ={
 		formatter => $formatter,
 	};
 my	@tests =(
+		[ $dir . '01-load.t', 'load_test' ],
+		[ $dir . '02-pod.t', 'pod_test' ],
 		[ $dir . $tests . 'BuildInstance/01-types.t', 'types_test' ],
 		[ $dir . $tests . '01-build_instance.t', 'main_test' ],
 	);

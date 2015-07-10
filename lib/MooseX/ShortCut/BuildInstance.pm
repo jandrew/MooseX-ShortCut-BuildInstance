@@ -2,7 +2,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = qv("v1.34.4");
+use version 0.77; our $VERSION = qv("v1.34.6");
 use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
@@ -23,9 +23,9 @@ use lib	'../../../lib',;
 use MooseX::ShortCut::BuildInstance::Types 1.034 qw(
 		BuildClassDict
 	);
-use MooseX::ShortCut::BuildInstance::UnhideDebug;
 ###LogSD warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance!";
 ###LogSD use Log::Shiras::Telephone;
+#~ ###LogSD use MooseX::ShortCut::BuildInstance::UnhideDebug;
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
@@ -199,6 +199,7 @@ sub should_re_use_classes{
 sub set_class_immutability{
 	my ( $bool, ) = @_;
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	
 	###LogSD					name_space 	=> 'set_class_immutability', );
 	###LogSD		$phone->talk( level => 'info', message =>[
 	###LogSD			"setting \$make_immutable_classes to; $bool", ] );
@@ -228,13 +229,29 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 
 =begin html
 
-<a href="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance"><img alt="Build Status" src="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance.png?branch=master" alt='Travis Build'/></a>
+<a href="https://www.perl.org">
+	<img src="https://img.shields.io/badge/perl-5.10+-brightgreen.svg" alt="perl version">
+</a>
 
-<a href="https://www.perl.org"><img src="https://img.shields.io/badge/perl-5.10+-brightgreen.svg" alt="perl version"></a>
+<a href="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance">
+	<img alt="Build Status" src="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance.png?branch=master" alt='Travis Build'/>
+</a>
 
-<a href='https://coveralls.io/r/jandrew/MooseX-ShortCut-BuildInstance?branch=master'><img src='https://coveralls.io/repos/jandrew/MooseX-ShortCut-BuildInstance/badge.svg?branch=master' alt='Coverage Status' /></a>
+<a href='https://coveralls.io/r/jandrew/MooseX-ShortCut-BuildInstance?branch=master'>
+	<img src='https://coveralls.io/repos/jandrew/MooseX-ShortCut-BuildInstance/badge.svg?branch=master' alt='Coverage Status' />
+</a>
 
-<a href='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance'><img src='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance.png' alt='kwalitee' height="20"/></a>
+<a>
+	<img src="https://img.shields.io/badge/this version-1.34.6-brightgreen.svg" alt="this version">
+</a>
+
+<a href="https://metacpan.org/pod/MooseX::ShortCut::BuildInstance">
+	<img src="https://badge.fury.io/pl/MooseX-ShortCut-BuildInstance.svg?label=cpan version" alt="CPAN version" height="20">
+</a>
+
+<a href='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance'>
+	<img src='http://cpants.cpanauthors.org/dist/MooseX-ShortCut-BuildInstance.png' alt='kwalitee' height="20"/>
+</a>
 
 =end html
 
