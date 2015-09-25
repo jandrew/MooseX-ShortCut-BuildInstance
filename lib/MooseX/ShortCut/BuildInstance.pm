@@ -7,7 +7,7 @@ use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
 use Types::Standard 1.000 qw( Bool );
-use Carp qw( cluck );
+use Carp qw( cluck confess );
 use Moose::Util qw( apply_all_roles );
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
@@ -19,6 +19,7 @@ Moose::Exporter->setup_import_methods(
 	],
 );
 use Data::Dumper;
+use Clone 'clone';
 use lib	'../../../lib',;
 use MooseX::ShortCut::BuildInstance::Types 1.034 qw(
 		BuildClassDict
@@ -48,7 +49,7 @@ my 	@add_class_args = qw(
 
 sub build_class{
 	
-	my	$args = ( scalar( @_ ) == 1 ) ? $_[0] : { @_ };
+	my	$args = ( scalar( @_ ) == 1 ) ? clone( $_[0] ) : { @_ };
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
 	###LogSD					name_space 	=> 'build_class', );
 	###LogSD		$phone->talk( level => 'info', message =>[
@@ -146,7 +147,7 @@ sub build_class{
 }
 
 sub build_instance{
-	my	$args = ( ref $_[0] eq 'HASH' ) ? $_[0] : { @_ };
+	my	$args = ( ref $_[0] eq 'HASH' ) ? clone( $_[0] ) : { @_ };
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
 	###LogSD					name_space 	=> 'build_instance', );
 	###LogSD		$phone->talk( level => 'info', message =>[
@@ -162,7 +163,7 @@ sub build_instance{
 	###LogSD		'Reduced arguments:', $args,
 	###LogSD		'Class building arguments:', $class_args, ] );
 	my $class = build_class( $class_args );
-	###LogSD	$phone->talk( level => 'trace', message =>[
+	###LogSD	$phone->talk( level => 'warn', message =>[
 	###LogSD		"Built class name: $class",
 	###LogSD		"To get instance now applying args:", $args, ] );
 	my $instance;
@@ -179,7 +180,7 @@ sub build_instance{
 		$message =~ s/\)\n;/\);/g;
 		###LogSD	$phone->talk( level => 'fatal', message =>[
 		###LogSD		"Failed to build -$class- for: $message", ] );
-		warn $message;
+		cluck $message;
 	}else{
 		###LogSD	$phone->talk( level => 'trace', message =>[
 		###LogSD		"Built instance:", $instance, ] );

@@ -8,6 +8,12 @@ Uses the change tracking convention
 
 {{$NEXT}}
 
+	* Another cool change
+
+v1.34.6   2015-09-25 06:01:53-07:00 America/Los_Angeles
+
+	! Added the configuration requirement for Moose 2.1213 before test since I got a weird fail for older moose when it was listed as installed
+	+ Added clone to the args so that passed references would stay safe for re-use
 	+ Additional badge changes
 
 v1.34.4   2015-03-31 05:30:37-07:00 America/Los_Angeles
