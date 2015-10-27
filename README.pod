@@ -19,7 +19,7 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 </a>
 
 <a>
-	<img src="https://img.shields.io/badge/this version-1.34.6-brightgreen.svg" alt="this version">
+	<img src="https://img.shields.io/badge/this version-1.34.8-brightgreen.svg" alt="this version">
 </a>
 
 <a href="https://metacpan.org/pod/MooseX::ShortCut::BuildInstance">

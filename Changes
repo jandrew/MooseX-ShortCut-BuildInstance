@@ -8,6 +8,10 @@ Uses the change tracking convention
 
 {{$NEXT}}
 
+	* Another cool change
+
+v1.34.8   2015-10-27 13:09:54-07:00 America/Los_Angeles
+
 	+ A minor change to the logging comments for build fails
 	+ changed #! perl to #!/usr/bin/env perl in the SYNOPSIS
 
