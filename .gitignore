@@ -1,0 +1,7 @@
+#gitignore file
+.build/*
+MooseX-ShortCut-BuildInstance*
+*.tar.gz
+*.zip
+DevelopmentNotes.txt
+Makefile.old
