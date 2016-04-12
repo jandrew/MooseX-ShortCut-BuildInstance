@@ -1,7 +1,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.36.6');
+use version 0.77; our $VERSION = version->declare('v1.36.8');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
@@ -90,12 +90,13 @@ sub build_class{
 		cluck( join( "\n", @warn_list ) );
 		###LogSD	$phone->talk( level => 'warn', message =>[
 		###LogSD		'The old class definitions will be overwritten with args:',  $class_args ] );
-	}elsif( !exists $built_classes->{$class_args->{package}} ){
+	}else{
 		#~ map{ print "$_ => $INC{$_}\n" } sort keys %INC;
 		my $package_key = $class_args->{package};
 		$package_key =~ s/::/\//g;
 		$package_key .= '.pm';
 		if( exists $INC{$package_key} ){
+			return $class_args->{package} if $re_use_classes;# Don't rebuild if you are re-using
 			cluck "Overwriting a pre-built and loaded class: " . $class_args->{package} ;
 			###LogSD	$phone->talk( level => 'warn', message =>[
 			###LogSD		"unmutablizing the class: $class_args->{package}" ] );
