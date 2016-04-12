@@ -8,6 +8,10 @@ Uses the change tracking convention
 
 {{$NEXT}}
 
+	* Another cool change
+
+v1.36.2   2016-04-12 14:31:59-07:00 America/Los_Angeles
+
 	- Removed the class MooseX::ShortCut::BuildInstance::UnhideDebug (Not actually used recently)
 	+ Added the ability to overwrite pre-built classes loaded with use
 		It does warn before doing so.

@@ -17,6 +17,7 @@ build_requires:
   MooseX::StrictConstructor: '0'
   Smart::Comments: '0'
   Test::Moose: '0'
+  Test::More: '0'
   Test::Most: '0'
   Type::Tiny: '1.000'
   lib: '0'
@@ -45,6 +46,9 @@ provides:
     version: v1.36.2
   MooseX::ShortCut::BuildInstance::Types:
     file: lib/MooseX/ShortCut/BuildInstance/Types.pm
+    version: v1.36.2
+  MooseX::ShortCut::BuildInstance::UnhideDebug:
+    file: lib/MooseX/ShortCut/BuildInstance/UnhideDebug.pm
     version: v1.36.2
 requires:
   Carp: '0'

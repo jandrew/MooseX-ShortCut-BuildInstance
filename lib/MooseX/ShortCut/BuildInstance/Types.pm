@@ -215,7 +215,7 @@ it and/or modify it under the same terms as Perl itself.
 The full text of the license can be found in the
 LICENSE file included with this module.
 
-This software is copyrighted (c) 2014 and 2015 by Jed Lund
+This software is copyrighted (c) 2014 and 2016 by Jed Lund
 
 =head1 DEPENDENCIES
 
