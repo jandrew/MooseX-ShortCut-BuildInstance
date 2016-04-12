@@ -1,7 +1,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.36.2');
+use version 0.77; our $VERSION = version->declare('v1.36.4');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
