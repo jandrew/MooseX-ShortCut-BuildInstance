@@ -7,12 +7,17 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
-
+	
 	* Another cool change
+
+v1.36.6   2016-04-12 14:53:22-07:00 America/Los_Angeles
+	
+	! Fixed the badges
+	+ Update the .travis.yml file
 
 v1.36.4   2016-04-12 14:39:22-07:00 America/Los_Angeles
 
-	* Really removed MooseX::ShortCut::BuildInstance::UnhideDebug
+	! Really removed MooseX::ShortCut::BuildInstance::UnhideDebug
 		after it got repopulated with a sync from Github
 
 v1.36.2   2016-04-12 14:31:59-07:00 America/Los_Angeles

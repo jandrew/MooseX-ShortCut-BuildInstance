@@ -1,7 +1,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.36.4');
+use version 0.77; our $VERSION = version->declare('v1.36.6');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
@@ -251,12 +251,12 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 	<img alt="Build Status" src="https://travis-ci.org/jandrew/MooseX-ShortCut-BuildInstance.png?branch=master" alt='Travis Build'/>
 </a>
 
-<a href='https://coveralls.io/r/jandrew/MooseX-ShortCut-BuildInstance?branch=master'>
-	<img src='https://coveralls.io/repos/jandrew/MooseX-ShortCut-BuildInstance/badge.svg?branch=master' alt='Coverage Status' />
+<a href='https://coveralls.io/github/jandrew/MooseX-ShortCut-BuildInstance?branch=master'>
+	<img src='https://coveralls.io/repos/github/jandrew/MooseX-ShortCut-BuildInstance/badge.svg?branch=master' alt='Coverage Status' />
 </a>
 
-<a href='https://github.com/jandrew/p5-spreadsheet-reader-excelxml'>
-	<img src="https://img.shields.io/github/tag/jandrew/p5-spreadsheet-reader-excelxml.svg?label=github version" alt="github version"/>
+<a href='https://github.com/jandrew/MooseX-ShortCut-BuildInstance'>
+	<img src="https://img.shields.io/github/tag/jandrew/MooseX-ShortCut-BuildInstance.svg?label=github version" alt="github version"/>
 </a>
 
 <a href="https://metacpan.org/pod/MooseX::ShortCut::BuildInstance">
