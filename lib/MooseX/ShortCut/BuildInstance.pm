@@ -1,7 +1,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.36.8');
+use version 0.77; our $VERSION = version->declare('v1.38.2');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
@@ -91,7 +91,6 @@ sub build_class{
 		###LogSD	$phone->talk( level => 'warn', message =>[
 		###LogSD		'The old class definitions will be overwritten with args:',  $class_args ] );
 	}else{
-		#~ map{ print "$_ => $INC{$_}\n" } sort keys %INC;
 		my $package_key = $class_args->{package};
 		$package_key =~ s/::/\//g;
 		$package_key .= '.pm';
@@ -132,7 +131,6 @@ sub build_class{
 	}
 	if( exists $args->{add_methods} ){
 		my	$meta = $class_name->meta;
-		print Dumper( $meta );
 		for my $method ( keys %{$args->{add_methods}} ){
 			###LogSD	$phone->talk( level => 'debug', message =>[
 			###LogSD		"adding method named: $method" ] );

@@ -7,8 +7,12 @@ Uses the change tracking convention
 * Place holder
 
 {{$NEXT}}
-
+	
 	* Another cool change
+
+v1.38.2   2016-04-12 17:14:35-07:00 America/Los_Angeles
+
+	! Cleaned up a left-in debug print statement
 
 v1.36.8   2016-04-12 16:36:52-07:00 America/Los_Angeles
 	

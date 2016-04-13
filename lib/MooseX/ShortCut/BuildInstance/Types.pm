@@ -1,5 +1,5 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = version->declare('v1.36.8');
+use version; our $VERSION = version->declare('v1.38.2');
 
 use strict;
 use warnings;
