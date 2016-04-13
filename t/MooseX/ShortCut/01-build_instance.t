@@ -25,7 +25,6 @@ use	lib '../../../../Log-Shiras/lib',
 ###LogSD						},
 ###LogSD					);
 ###LogSD	use Log::Shiras::Telephone;
-###LogSD	use Log::Shiras::UnhideDebug;
 use MooseX::ShortCut::BuildInstance;
 my( 
 			$pet_rock_class, $paco, $pacos_evil_twin, $pacos_good_twin, 

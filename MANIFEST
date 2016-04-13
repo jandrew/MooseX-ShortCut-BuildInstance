@@ -10,6 +10,7 @@ dist.ini
 examples/MooseX/ShortCut/build_instance_example.pl
 lib/MooseX/ShortCut/BuildInstance.pm
 lib/MooseX/ShortCut/BuildInstance/Types.pm
+lib/MooseX/ShortCut/BuildInstance/UnhideDebug.pm
 t/Identity.pm
 t/Mineral.pm
 t/MooseX/ShortCut/01-build_instance.t

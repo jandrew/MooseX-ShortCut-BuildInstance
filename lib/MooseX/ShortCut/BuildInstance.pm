@@ -1,7 +1,7 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.38.2');
+use version 0.77; our $VERSION = version->declare('v1.38.4');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
@@ -24,7 +24,9 @@ use lib	'../../../lib',;
 use MooseX::ShortCut::BuildInstance::Types 1.036 qw(
 		BuildClassDict
 	);
-###LogSD use Log::Shiras::Telephone;
+###LogSD	use Log::Shiras::Telephone;
+###LogSD	use Log::Shiras::UnhideDebug;
+use MooseX::ShortCut::BuildInstance::UnhideDebug;
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
