@@ -10,6 +10,11 @@ Uses the change tracking convention
 
 	* Another cool change
 
+v1.40.2   2016-05-01 09:41:57-07:00 America/Los_Angeles
+	
+	+ Added the global variable $should_clone_args and a method to set it
+	+ Added some additional debugging through Log::Shiras
+
 v1.38.4   2016-04-12 22:41:13-07:00 America/Los_Angeles
 	
 	! re-added MooseX::ShortCut::BuildInstance::UnhideDebug I still use it for debugging

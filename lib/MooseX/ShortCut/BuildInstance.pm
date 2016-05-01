@@ -1,22 +1,20 @@
 package MooseX::ShortCut::BuildInstance;
 # ABSTRACT: A shortcut to build Moose instances
 
-use version 0.77; our $VERSION = version->declare('v1.38.4');
+use version 0.77; our $VERSION = version->declare('v1.40.2');
 ###LogSD	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use Moose 2.1213;
 use Moose::Meta::Class;
-use Types::Standard 1.000 qw( Bool );
+use Types::Standard 1.000 qw( Bool is_HashRef );
 use Carp qw( cluck confess );
 use Moose::Util qw( apply_all_roles );
 use Moose::Exporter;
 Moose::Exporter->setup_import_methods(
-	as_is => [
-		'build_instance',
-		'build_class',
-		'should_re_use_classes',
-		'set_class_immutability',
-	],
+	as_is => [qw(
+		build_instance				build_class					should_re_use_classes
+		set_class_immutability		set_args_cloning
+	)],
 );
 use Data::Dumper;
 use Clone 'clone';
@@ -34,6 +32,7 @@ our	$anonymous_class_count	= 0;
 our	$built_classes			= {};
 our	$re_use_classes 		= 0;
 our	$make_classes_immutable = 1;
+our	$should_clone_args		= 1;
 my 	@init_class_args = qw(
 		package
 		superclasses
@@ -48,8 +47,8 @@ my 	@add_class_args = qw(
 #########1 Public Methods     3#########4#########5#########6#########7#########8#########9
 
 sub build_class{
-	
-	my	$args = ( scalar( @_ ) == 1 ) ? clone( $_[0] ) : { @_ };
+	my	$temp_args = ( ( scalar( @_ ) == 1 ) ? $_[0] : { @_ } );
+	my	$args = $should_clone_args ? clone( $temp_args ) : $temp_args;
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
 	###LogSD					name_space 	=> 'build_class', );
 	###LogSD		$phone->talk( level => 'info', message =>[
@@ -84,7 +83,7 @@ sub build_class{
 			### <where> - missing the superclass ...
 			$class_args->{$key} = [ 'Anonymous::Shiras::Moose::Class' ],
 			###LogSD	$phone->talk( level => 'warn', message =>[
-			###LogSD		"missing the superclass value - using: " . $class_args->{$key} ] );
+			###LogSD		"missing the superclass value - using: ", $class_args->{$key} ] );
 		}
 	}
 	if( $warning ){
@@ -97,7 +96,11 @@ sub build_class{
 		$package_key =~ s/::/\//g;
 		$package_key .= '.pm';
 		if( exists $INC{$package_key} ){
-			return $class_args->{package} if $re_use_classes;# Don't rebuild if you are re-using
+			if( $re_use_classes ){
+				###LogSD	$phone->talk( level => 'warn', message =>[
+				###LogSD		"Already built the class: $class_args->{package}" ] );
+				return $class_args->{package};# Don't rebuild if you are re-using
+			}
 			cluck "Overwriting a pre-built and loaded class: " . $class_args->{package} ;
 			###LogSD	$phone->talk( level => 'warn', message =>[
 			###LogSD		"unmutablizing the class: $class_args->{package}" ] );
@@ -123,6 +126,8 @@ sub build_class{
 		$class_name->meta->make_mutable;
 	}
 	if( exists $args->{add_attributes} ){
+		###LogSD	$phone->talk( level => 'debug', message =>[
+		###LogSD		"Found attributes to add" ] );
 		my	$meta = $class_name->meta;
 		for my $attribute ( keys %{$args->{add_attributes}} ){
 			###LogSD	$phone->talk( level => 'debug', message =>[
@@ -132,6 +137,8 @@ sub build_class{
 		delete $args->{add_attributes};
 	}
 	if( exists $args->{add_methods} ){
+		###LogSD	$phone->talk( level => 'debug', message =>[
+		###LogSD		"Found roles to add" ] );
 		my	$meta = $class_name->meta;
 		for my $method ( keys %{$args->{add_methods}} ){
 			###LogSD	$phone->talk( level => 'debug', message =>[
@@ -141,6 +148,8 @@ sub build_class{
 		delete $args->{add_methods};
 	}
 	if( exists $args->{add_roles_in_sequence} ){
+		###LogSD	$phone->talk( level => 'debug', message =>[
+		###LogSD		"Found roles_in_sequence to add" ] );
 		for my $role ( @{$args->{add_roles_in_sequence}} ){
 			###LogSD	$phone->talk( level => 'debug', message =>[ "adding role: $role" ] );
 			apply_all_roles( $class_name, $role );
@@ -158,7 +167,8 @@ sub build_class{
 }
 
 sub build_instance{
-	my	$args = ( ref $_[0] eq 'HASH' ) ? clone( $_[0] ) : { @_ };
+	my	$temp_args = is_HashRef( $_[0] ) ? $_[0] : { @_ };
+	my	$args = $should_clone_args ? clone( $temp_args ) : $temp_args;
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
 	###LogSD					name_space 	=> 'build_instance', );
 	###LogSD		$phone->talk( level => 'info', message =>[
@@ -214,11 +224,19 @@ sub should_re_use_classes{
 sub set_class_immutability{
 	my ( $bool, ) = @_;
 	###LogSD	my	$phone = Log::Shiras::Telephone->new(
-	
 	###LogSD					name_space 	=> 'set_class_immutability', );
 	###LogSD		$phone->talk( level => 'info', message =>[
 	###LogSD			"setting \$make_immutable_classes to; $bool", ] );
 	$make_classes_immutable = ( $bool ) ? 1 : 0 ;
+}
+
+sub set_args_cloning{
+	my ( $bool, ) = @_;
+	###LogSD	my	$phone = Log::Shiras::Telephone->new(
+	###LogSD					name_space 	=> 'set_args_cloning', );
+	$should_clone_args = !!$bool;
+	###LogSD		$phone->talk( level => 'info', message =>[
+	###LogSD			"set \$should_clone_args to; $should_clone_args", ] );
 }
 
 #########1 Phinish strong     3#########4#########5#########6#########7#########8#########9
@@ -329,7 +347,7 @@ MooseX::ShortCut::BuildInstance - A shortcut to build Moose instances
 	done_testing();
     
     ##############################################################################
-    #     Output of SYNOPSIS
+    # Output of SYNOPSIS
     # 01:ok 1 - Check that the Pet::Rock has an -Identity-
     # 02:My Pet::Rock made from -Quartz- (a Mineral) is called -Paco-
     # 01:ok 1 - Check that the Pet::Rock has an -Identity-
@@ -354,7 +372,7 @@ The package can also be used as a class factory with the L<should_re_use_classes
 
 Even though this is a Moose based class it provides a functional interface.
 
-=head1 WARNING
+=head1 WARNING(S)
 
 Moose (and I think perl 5) can't have two classes with the same name but
 different guts coexisting! This means that if you build a class (package) name 
@@ -384,6 +402,14 @@ The Types module in this package uses L<Type::Tiny> which can, in the
 background, use L<Type::Tiny::XS>.  While in general this is a good thing you will 
 need to make sure that Type::Tiny::XS is version 0.010 or newer since the older 
 ones didn't support the 'Optional' method.
+
+This package will clone the passed arguments to L<build_class|/build_class> and 
+L<build_instance|/build_instance> since the references are destructivly parsed.  
+If that is not what you want then use the method L<set_args_cloning
+|/set_args_cloning( $bool )> to manage the desired process.  Where this is likley 
+to go south is if your passed arguments contain a deep perl data set or reference 
+that you want shared.  In this case clone only the bits you want cloned on the 
+script side.
 
 =head1 Functions for Export
 
@@ -545,6 +571,16 @@ L<MooseX::ShortCut::BuildInstance::make_classes_immutable
 
 =back
 
+=head2 set_args_cloning( $bool )
+
+=over
+
+This sets/changes the global variable 
+L<MooseX::ShortCut::BuildInstance::should_clone_args
+|/$MooseX::ShortCut::BuildInstance::should_clone_args>
+
+=back
+
 =head1 GLOBAL VARIABLES
 
 =head2 $MooseX::ShortCut::BuildInstance::anonymous_class_count
@@ -581,6 +617,29 @@ B<Default:> False = warn then overwrite
 This is a boolean (1|0) variable that manages whether a class is immutabilized at the end of 
 creation.  This can be changed with the exported method L<set_class_immutability
 |/set_class_immutability( $bool )>.
+
+=over
+
+B<Default:> True = always immutabilize classes after building
+
+=back
+
+=head2 $MooseX::ShortCut::BuildInstance::should_clone_args
+
+This is a boolean (1|0) variable that manages whether a the arguments passed to 
+L<build_instance|/build_instance( %argsE<verbar>\%args )> and L<build_class
+|/build_class( %argsE<verbar>\%args )> are cloned (using L<Clone> )  the arguments 
+to both of these are processed destructivly so generally you would want them cloned 
+but not in every case.  If you want cloning to be managed on the script side set this 
+global variable to 0.  Where this is likley to be helpful is if your passed arguments 
+contain a deep perl data set or reference that you want shared.  In this case clone only 
+the bits you want cloned on the script side.
+
+=over
+
+B<Default:> True = always clone arguments
+
+=back
 
 =head1 Build/Install from Source
 
@@ -636,7 +695,8 @@ L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCu
 
 =over
 
-B<1.> Pending ideas
+B<1.> L<Increase test coverage
+|https://coveralls.io/github/jandrew/MooseX-ShortCut-BuildInstance?branch=master>
 
 =back
 

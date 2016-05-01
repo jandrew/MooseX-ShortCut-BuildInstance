@@ -1,5 +1,5 @@
 package MooseX::ShortCut::BuildInstance::UnhideDebug;
-use version; our $VERSION = version->declare('v1.38.4');
+use version; our $VERSION = version->declare('v1.40.2');
 
 use 5.010;
 use strict;
