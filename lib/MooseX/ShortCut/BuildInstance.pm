@@ -184,7 +184,7 @@ sub build_instance{
 	###LogSD		'Reduced arguments:', $args,
 	###LogSD		'Class building arguments:', $class_args, ] );
 	my $class = build_class( $class_args );
-	###LogSD	$phone->talk( level => 'warn', message =>[
+	###LogSD	$phone->talk( level => 'trace', message =>[
 	###LogSD		"Built class name: $class",
 	###LogSD		"To get instance now applying args:", $args, ] );
 	my $instance;
