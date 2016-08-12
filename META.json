@@ -4,7 +4,7 @@
       "Jed Lund <jandrew@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.043, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Dist::Zilla version 6.005, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
@@ -45,6 +45,7 @@
             "lib" : "0",
             "perl" : "5.010",
             "strict" : "0",
+            "utf8" : "0",
             "version" : "0.77",
             "warnings" : "0"
          }
@@ -65,7 +66,6 @@
             "MooseX::StrictConstructor" : "0",
             "Smart::Comments" : "0",
             "Test::Moose" : "0",
-            "Test::More" : "0",
             "Test::Most" : "0",
             "Type::Tiny" : "1.000",
             "lib" : "0",
@@ -76,15 +76,11 @@
    "provides" : {
       "MooseX::ShortCut::BuildInstance" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance.pm",
-         "version" : "v1.40.2"
+         "version" : "v1.42.0"
       },
       "MooseX::ShortCut::BuildInstance::Types" : {
          "file" : "lib/MooseX/ShortCut/BuildInstance/Types.pm",
-         "version" : "v1.40.2"
-      },
-      "MooseX::ShortCut::BuildInstance::UnhideDebug" : {
-         "file" : "lib/MooseX/ShortCut/BuildInstance/UnhideDebug.pm",
-         "version" : "v1.40.2"
+         "version" : "v1.42.0"
       }
    },
    "release_status" : "stable",
@@ -99,7 +95,7 @@
          "web" : "https://github.com/jandrew/MooseX-ShortCut-BuildInstance"
       }
    },
-   "version" : "v1.40.2",
+   "version" : "v1.42.0",
    "x_authority" : "cpan:JANDREW"
 }
 
