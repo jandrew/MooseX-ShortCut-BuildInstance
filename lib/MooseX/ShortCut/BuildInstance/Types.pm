@@ -1,66 +1,42 @@
 package MooseX::ShortCut::BuildInstance::Types;
-use version; our $VERSION = version->declare('v1.42.0');
-
-use strict;
-use warnings;
-use Data::Dumper;
-use Type::Utils 1.000 -all;
-use Type::Library
-	-base,
-	-declare => qw(
-		NameSpace
-		SuperClassesList
-		RolesList
-		Attributes
-		Methods
-		BuildClassDict
-	);
-use Types::Standard -types;
-my $try_xs =
-		exists($ENV{PERL_TYPE_TINY_XS}) ? !!$ENV{PERL_TYPE_TINY_XS} :
-		exists($ENV{PERL_ONLY})         ?  !$ENV{PERL_ONLY} :
-		1;
-if( $try_xs and exists $INC{'Type/Tiny/XS.pm'} ){
-	eval "use Type::Tiny::XS 0.010";
-	if( $@ ){
-		die "You have loaded Type::Tiny::XS but versions prior to 0.010 will cause this module to fail";
-	}
-}
-
+use version; our $VERSION = version->declare('v1.44.2');
+use 5.010;
+use utf8;
+use MooseX::Types::Moose qw( Str ArrayRef HashRef CodeRef ClassName RoleName );
+use MooseX::Types::Structured qw( Optional Dict );
+use MooseX::Types -declare => [qw( 
+		NameSpace			SuperClassesList	RolesList
+		Attributes			Methods				BuildClassDict
+	)];
+	
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
 
 
 #########1 Type Library       3#########4#########5#########6#########7#########8#########9
 
-declare NameSpace,
-	as Str,
+subtype NameSpace, as Str,
     where{ $_ =~ /^[A-Za-z:]+$/ },
 	message{ "-$_- does not match: " . qr/^[A-Za-z:]+$/ };
 	
-declare SuperClassesList,
-	as ArrayRef[ ClassName ],
+subtype SuperClassesList,	as ArrayRef[ ClassName ],
 	where{ scalar( @$_ ) > 0 };
 	
-declare RolesList,
-	as ArrayRef[ RoleName ],
+subtype RolesList, as ArrayRef[ RoleName ],
 	where{ scalar( @$_ ) > 0 };
 	
-declare Attributes,
-	as HashRef[ HashRef ],
+subtype Attributes, as HashRef[ HashRef ],
 	where{ scalar( keys %$_ ) > 0 };
 	
-declare Methods,
-	as HashRef[ CodeRef ],
+subtype Methods, as HashRef[ CodeRef ],
 	where{ scalar( keys %$_ ) > 0 };
 	
-declare BuildClassDict,
-	as Dict[
-		package					=> Optional[ NameSpace ],
+subtype BuildClassDict, as Dict[
+		package 				=> Optional[ NameSpace ],
 		superclasses			=> Optional[ SuperClassesList ],
-		roles					=> Optional[ RolesList ],
+		roles	 				=> Optional[ RolesList ],
 		add_roles_in_sequence	=> Optional[ RolesList ],
-		add_attributes			=> Optional[ Attributes ],
+		add_attributes 			=> Optional[ Attributes ],
 		add_methods				=> Optional[ Methods ],
 	],
 	where{ scalar( keys( %$_ ) ) > 0 };
@@ -94,16 +70,10 @@ package.
 All type tests included with this package are considered to be the fixed definition of 
 the types.  Any definition not included in the testing is considered flexible.
 
-This module uses L<Type::Tiny> which can, in the background, use L<Type::Tiny::XS>.  
-While in general this is a good thing you will need to make sure that 
-Type::Tiny::XS is version 0.010 or newer since the older ones didn't support the 
-'Optional' method.
-
 =head2 Types
 
-These are checks compatible with the L<Moose> typing system.  They are used to see 
-if passed information is compatible with some standard.  For mor information see 
-L<Type::Tiny>.
+These are checks from the L<Moose> typing system.  They are used to see 
+if passed information is compatible with some standard.
 		
 =head3 NameSpace
 
@@ -170,7 +140,7 @@ B<Test:> This is a Dictionary ref defining the possible entrys to the
 
 B<Accepts:>
 
-	Dict[
+	Dict[# Moose doesn't have a Dict type so the guts are different
 		package => Optional[ NameSpace ],
 		superclasses => Optional[ SuperClassesList ],
 		roles => Optional[ RolesList ],
@@ -223,7 +193,11 @@ This software is copyrighted (c) 2014 and 2016 by Jed Lund
 
 L<version>
 
-L<Type::Tiny>
+L<utf8>
+
+L<MooseX::Types>
+
+L<MooseX::Types::Moose>
 
 =back
 

@@ -27,14 +27,12 @@ my %WriteMakefileArgs = (
     "Moose::Exporter" => 0,
     "Moose::Meta::Class" => 0,
     "Moose::Util" => 0,
-    "Type::Library" => 0,
-    "Type::Utils" => "1.000",
-    "Types::Standard" => "1.000",
+    "MooseX::Types" => 0,
+    "MooseX::Types::Moose" => 0,
+    "MooseX::Types::Structured" => 0,
     "lib" => 0,
-    "strict" => 0,
     "utf8" => 0,
-    "version" => "0.77",
-    "warnings" => 0
+    "version" => "0.77"
   },
   "TEST_REQUIRES" => {
     "Capture::Tiny" => "0.12",
@@ -56,7 +54,7 @@ my %WriteMakefileArgs = (
     "lib" => 0,
     "version" => "0.77"
   },
-  "VERSION" => "v1.42.0",
+  "VERSION" => "v1.44.2",
   "test" => {
     "TESTS" => "t/MooseX/ShortCut/*.t t/MooseX/ShortCut/BuildInstance/*.t"
   }
@@ -76,18 +74,16 @@ my %FallbackPrereqs = (
   "Moose::Util" => 0,
   "MooseX::HasDefaults::RO" => 0,
   "MooseX::StrictConstructor" => 0,
+  "MooseX::Types" => 0,
+  "MooseX::Types::Moose" => 0,
+  "MooseX::Types::Structured" => 0,
   "Smart::Comments" => 0,
   "Test::Moose" => 0,
   "Test::Most" => 0,
-  "Type::Library" => 0,
   "Type::Tiny" => "1.000",
-  "Type::Utils" => "1.000",
-  "Types::Standard" => "1.000",
   "lib" => 0,
-  "strict" => 0,
   "utf8" => 0,
-  "version" => "0.77",
-  "warnings" => 0
+  "version" => "0.77"
 );
 
 unless ( eval { ExtUtils::MakeMaker->VERSION(6.63_03) } ) {

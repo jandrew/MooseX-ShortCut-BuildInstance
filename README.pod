@@ -442,7 +442,8 @@ L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCu
 B<1.> L<Increase test coverage
 |https://coveralls.io/github/jandrew/MooseX-ShortCut-BuildInstance?branch=master>
 
-B<2.> Add an explicit import call as an action key in 'build_class'
+B<2.> Add an explicit 'export' setup call using L<Moose::Exporter> as an action key in 
+'build_class'
 
 =back
 
@@ -505,11 +506,13 @@ L<Moose::Util> ->with_traits
 
 L<MooseX::ClassCompositor>
 
-L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
+L<Log::Shiras::Unhide>
 
 =over
 
-All lines in this package that use Log::Shiras are commented out
+All debug lines in this module are warn statements and are hidden behind 
+'###InternalBuilDInstancE'.  When exposed they can be redirected to log files with 
+Log::Shiras::TapWarn.
 
 =back
 

@@ -1,11 +1,13 @@
 package MooseX::ShortCut::BuildInstance;
-use version 0.77; our $VERSION = version->declare('v1.42.0');
-###InternalBuilDInstancE	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION" if !$ENV{hide_warn_for_test};
+use version 0.77; our $VERSION = version->declare('v1.44.2');
+#~ use lib '../../../../Log-Shiras/lib';
+#~ use Log::Shiras::Unhide qw( :InternalBuilDInstancE );
+###InternalBuilDInstancE	warn "You uncovered internal logging statements for MooseX::ShortCut::BuildInstance-$VERSION";
 use 5.010;
 use utf8;
 use Moose 2.1213;
 use Moose::Meta::Class;
-use Types::Standard 1.000 qw( Bool is_HashRef );
+use MooseX::Types::Moose qw( Bool HashRef );
 use Carp qw( cluck confess );
 use Moose::Util qw( apply_all_roles );
 use Moose::Exporter;
@@ -21,7 +23,6 @@ use lib	'../../../lib',;
 use MooseX::ShortCut::BuildInstance::Types 1.036 qw(
 		BuildClassDict
 	);
-###InternalBuilDInstancE	use Log::Shiras::Telephone;
 
 #########1 Package Variables  3#########4#########5#########6#########7#########8#########9
 
@@ -46,17 +47,12 @@ my 	@add_class_args = qw(
 sub build_class{
 	my	$temp_args = ( ( scalar( @_ ) == 1 ) ? $_[0] : { @_ } );
 	my	$args = $should_clone_args ? clone( $temp_args ) : $temp_args;
-	###InternalBuilDInstancE	my	$phone = Log::Shiras::Telephone->new(
-	###InternalBuilDInstancE					name_space 	=> 'build_class', );
-	###InternalBuilDInstancE		$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE			"Arrived at build_class with args:", $args, ] );
+	###InternalBuilDInstancE	warn "Arrived at build_class with args:" . Dumper( $args );
 	my ( $class_args, $i, $can_build, $warning, @warn_list, $pre_exists );
 	for my $key ( @init_class_args ){
-		###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-		###InternalBuilDInstancE		"Processing the class argument: $key", ] );
+		###InternalBuilDInstancE	warn "Processing the class argument: $key";
 		if( exists $args->{$key} ){
-			###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-			###InternalBuilDInstancE		'Processing the values:', $args->{$key}, ] );
+			###InternalBuilDInstancE	warn 'Processing the values:' . Dumper( $args->{$key} );
 			$class_args->{$key} = $args->{$key};
 			if( $key eq 'package' ){
 				if( $built_classes->{$args->{$key}} ){
@@ -64,8 +60,7 @@ sub build_class{
 					if( !$re_use_classes ){
 						push @warn_list, 'You already built the class: ' . $args->{$key};
 						$warning = 1;
-						###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-						###InternalBuilDInstancE		"unmutablizing the class ...", @warn_list ] );
+						###InternalBuilDInstancE	warn "unmutablizing the class ..." . Dumper( @warn_list );
 						$args->{$key}->meta->make_mutable;
 					}
 				}
@@ -74,102 +69,84 @@ sub build_class{
 			delete $args->{$key};
 		}elsif( $key eq 'package' ){
 			$class_args->{$key} = "ANONYMOUS_SHIRAS_MOOSE_CLASS_" . ++$anonymous_class_count;
-			###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-			###InternalBuilDInstancE		"missing a package value - using: " . $class_args->{$key} ] );
+			###InternalBuilDInstancE	warn "missing a package value - using: " . $class_args->{$key};
 		}elsif( $key eq 'superclasses' ){
-			### <where> - missing the superclass ...
 			$class_args->{$key} = [ 'Anonymous::Shiras::Moose::Class' ],
-			###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-			###InternalBuilDInstancE		"missing the superclass value - using: ", $class_args->{$key} ] );
+			###InternalBuilDInstancE	warn "missing the superclass value - using: " . Dumper( $class_args->{$key} );
 		}
 	}
 	if( $warning ){
 		push @warn_list, 'The old class definitions will be overwritten with args:', Dumper( $class_args );
 		cluck( join( "\n", @warn_list ) );
-		###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-		###InternalBuilDInstancE		'The old class definitions will be overwritten with args:',  $class_args ] );
 	}else{
 		my $package_key = $class_args->{package};
 		$package_key =~ s/::/\//g;
 		$package_key .= '.pm';
 		if( exists $INC{$package_key} ){
 			if( $re_use_classes ){
-				###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-				###InternalBuilDInstancE		"Already built the class: $class_args->{package}" ] );
+				###InternalBuilDInstancE	warn "Already built the class: $class_args->{package}";
 				return $class_args->{package};# Don't rebuild if you are re-using
 			}
 			cluck "Overwriting a pre-built and loaded class: " . $class_args->{package} ;
-			###InternalBuilDInstancE	$phone->talk( level => 'warn', message =>[
-			###InternalBuilDInstancE		"unmutablizing the class: $class_args->{package}" ] );
 			$class_args->{package}->meta->make_mutable;
 		}
 	}
 	my $want_array = ( caller(0) )[5];
-	###InternalBuilDInstancE	$phone->talk( level => 'trace', message =>[
-	###InternalBuilDInstancE		'class args:', $class_args, 'remaining arguments:', $args,
-	###InternalBuilDInstancE		"want array: $want_array", "Pre exists state: " . ($pre_exists//''),
-	###InternalBuilDInstancE		"\$warning state: " . ($warning//''),	'finalize the class name or load a new one ...' ] );
+	###InternalBuilDInstancE	warn 'class args:' . Dumper( $class_args );
+	###InternalBuilDInstancE	warn 'remaining arguments:' . Dumper( $args );
+	###InternalBuilDInstancE	warn "want array: $want_array";
+	###InternalBuilDInstancE	warn "Pre exists state: " . ($pre_exists//'');
+	###InternalBuilDInstancE	warn "\$warning state: " . ($warning//'');
+	###InternalBuilDInstancE	warn 'finalize the class name or load a new one ...';
 	my	$class_name = ( $pre_exists and !$warning ) ?
 			$class_args->{package} :
 			Moose::Meta::Class->create( %{$class_args} )->name;
-	###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-	###InternalBuilDInstancE		'class to this point: ' . $class_name->dump( 2 ) ] );
+	###InternalBuilDInstancE	warn 'class to this point: ' . $class_name->dump( 2 );
 	if( !$class_name->meta->is_mutable and
 		(	exists $args->{add_attributes} or
 			exists $args->{add_methods} or
 			exists $args->{add_roles_in_sequence} ) ){
-		###InternalBuilDInstancE	$phone->talk( level => 'info', message =>[
-		###InternalBuilDInstancE		'Unmutablizing the class ...' ] );
+		###InternalBuilDInstancE	warn 'Un-immutablizing the class ...';
 		$class_name->meta->make_mutable;
 	}
 	if( exists $args->{add_attributes} ){
-		###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-		###InternalBuilDInstancE		"Found attributes to add" ] );
+		###InternalBuilDInstancE	warn "Found attributes to add";
 		my	$meta = $class_name->meta;
 		for my $attribute ( keys %{$args->{add_attributes}} ){
-			###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-			###InternalBuilDInstancE		"adding attribute named: $attribute" ] );
+			###InternalBuilDInstancE	warn "adding attribute named: $attribute";
 			$meta->add_attribute( $attribute => $args->{add_attributes}->{$attribute} );
 		}
 		delete $args->{add_attributes};
 	}
 	if( exists $args->{add_methods} ){
-		###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-		###InternalBuilDInstancE		"Found roles to add" ] );
+		###InternalBuilDInstancE	warn "Found roles to add";
 		my	$meta = $class_name->meta;
 		for my $method ( keys %{$args->{add_methods}} ){
-			###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-			###InternalBuilDInstancE		"adding method named: $method" ] );
+			###InternalBuilDInstancE	warn "adding method named: $method";
 			$meta->add_method( $method => $args->{add_methods}->{$method} );
 		}
 		delete $args->{add_methods};
 	}
 	if( exists $args->{add_roles_in_sequence} ){
-		###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[
-		###InternalBuilDInstancE		"Found roles_in_sequence to add" ] );
+		###InternalBuilDInstancE	warn "Found roles_in_sequence to add";
 		for my $role ( @{$args->{add_roles_in_sequence}} ){
-			###InternalBuilDInstancE	$phone->talk( level => 'debug', message =>[ "adding role: $role" ] );
+			###InternalBuilDInstancE	warn "adding role:" . Dumper( $role );
 			apply_all_roles( $class_name, $role );
 		}
 		delete $args->{add_roles_in_sequence};
 	}
 	if( $make_classes_immutable ){
-		###InternalBuilDInstancE	$phone->talk( level => 'info', message =>[
-		###InternalBuilDInstancE		'Immutablizing the class ...' ] );
+		###InternalBuilDInstancE	warn 'Immutablizing the class ...';
 		$class_name->meta->make_immutable;
 	}
-	###InternalBuilDInstancE	$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE		"returning: $class_name" ] );
+	###InternalBuilDInstancE	warn "returning: $class_name";
 	return $class_name;
 }
 
 sub build_instance{
 	my	$temp_args = is_HashRef( $_[0] ) ? $_[0] : { @_ };
 	my	$args = $should_clone_args ? clone( $temp_args ) : $temp_args;
-	###InternalBuilDInstancE	my	$phone = Log::Shiras::Telephone->new(
-	###InternalBuilDInstancE					name_space 	=> 'build_instance', );
-	###InternalBuilDInstancE		$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE			"Arrived at build_instance with args:", $args, ] );
+	###InternalBuilDInstancE	warn "Arrived at build_instance with args:" . Dumper( $args );
 	my	$class_args;
 	for my $key ( @init_class_args, @add_class_args ){
 		if( exists $args->{$key} ){
@@ -177,13 +154,10 @@ sub build_instance{
 			delete $args->{$key};
 		}
 	}
-	###InternalBuilDInstancE	$phone->talk( level => 'trace', message =>[
-	###InternalBuilDInstancE		'Reduced arguments:', $args,
-	###InternalBuilDInstancE		'Class building arguments:', $class_args, ] );
+	###InternalBuilDInstancE	warn 'Reduced arguments:' . Dumper( $args );
+	###InternalBuilDInstancE	warn 'Class building arguments:' . Dumper( $class_args );
 	my $class = build_class( $class_args );
-	###InternalBuilDInstancE	$phone->talk( level => 'trace', message =>[
-	###InternalBuilDInstancE		"Built class name: $class",
-	###InternalBuilDInstancE		"To get instance now applying args:", $args, ] );
+	###InternalBuilDInstancE	warn "Built class -$class- To get instance now applying args:" . Dumper( $args );
 	my $instance;
 	eval '$instance = $class->new( %$args )';
 	if( $@ ){
@@ -196,44 +170,29 @@ sub build_instance{
 			}
 		}
 		$message =~ s/\)\n;/\);/g;
-		###InternalBuilDInstancE	if( 1 ){
-		###InternalBuilDInstancE		$phone->talk( level => 'warn', message =>[
-		###InternalBuilDInstancE			"Failed to build -$class- for: $message", ] );
-		###InternalBuilDInstancE	}else{
 		cluck $message;
-		###InternalBuilDInstancE	}
 	}else{
-		###InternalBuilDInstancE	$phone->talk( level => 'trace', message =>[
-		###InternalBuilDInstancE		"Built instance:", $instance, ] );
+		###InternalBuilDInstancE	warn "Built instance:" . Dumper( $instance );
 		return $instance;
 	}
 }
 
 sub should_re_use_classes{
 	my ( $bool, ) = @_;
-	###InternalBuilDInstancE	my	$phone = Log::Shiras::Telephone->new(
-	###InternalBuilDInstancE					name_space 	=> 'should_re_use_classes', );
-	###InternalBuilDInstancE		$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE			"setting \$re_use_classes to: $bool", ] );
+	###InternalBuilDInstancE	warn "setting \$re_use_classes to: $bool";
 	$re_use_classes = ( $bool ) ? 1 : 0 ;
 }
 
 sub set_class_immutability{
 	my ( $bool, ) = @_;
-	###InternalBuilDInstancE	my	$phone = Log::Shiras::Telephone->new(
-	###InternalBuilDInstancE					name_space 	=> 'set_class_immutability', );
-	###InternalBuilDInstancE		$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE			"setting \$make_immutable_classes to; $bool", ] );
+	###InternalBuilDInstancE	warn "setting \$make_immutable_classes to; $bool";
 	$make_classes_immutable = ( $bool ) ? 1 : 0 ;
 }
 
 sub set_args_cloning{
 	my ( $bool, ) = @_;
-	###InternalBuilDInstancE	my	$phone = Log::Shiras::Telephone->new(
-	###InternalBuilDInstancE					name_space 	=> 'set_args_cloning', );
 	$should_clone_args = !!$bool;
-	###InternalBuilDInstancE		$phone->talk( level => 'info', message =>[
-	###InternalBuilDInstancE			"set \$should_clone_args to; $should_clone_args", ] );
+	###InternalBuilDInstancE	warn "set \$should_clone_args to; $should_clone_args";
 }
 
 #########1 Phinish strong     3#########4#########5#########6#########7#########8#########9
@@ -695,7 +654,8 @@ L<MooseX-ShortCut-BuildInstance/issues|https://github.com/jandrew/MooseX-ShortCu
 B<1.> L<Increase test coverage
 |https://coveralls.io/github/jandrew/MooseX-ShortCut-BuildInstance?branch=master>
 
-B<2.> Add an explicit import call as an action key in 'build_class'
+B<2.> Add an explicit 'export' setup call using L<Moose::Exporter> as an action key in 
+'build_class'
 
 =back
 
@@ -758,11 +718,13 @@ L<Moose::Util> ->with_traits
 
 L<MooseX::ClassCompositor>
 
-L<Log::Shiras|https://github.com/jandrew/Log-Shiras>
+L<Log::Shiras::Unhide>
 
 =over
 
-All lines in this package that use Log::Shiras are commented out
+All debug lines in this module are warn statements and are hidden behind 
+'###InternalBuilDInstancE'.  When exposed they can be redirected to log files with 
+Log::Shiras::TapWarn.
 
 =back
 

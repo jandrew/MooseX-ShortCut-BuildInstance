@@ -1,5 +1,5 @@
 #########1 Test File for MooseX::ShortCut::BuildInstance    6#########7#########8#########9
-#!/usr/bin/env perl
+#!perl
 
 $| = 1;
 
@@ -8,12 +8,14 @@ use Test::Moose;
 use Capture::Tiny 0.12 qw(
 		capture_stderr
 	);
-use Types::Standard 1.000 -types;
+use MooseX::Types::Moose qw( Str );
+#~ use Types::Standard 1.000 -types;
 
 use	lib '../../../../Log-Shiras/lib',
 		'../../../lib',
 		'../../', 'lib', 't';
-#~ use Log::Shiras::Switchboard v0.23 qw( :debug );#
+#~ use Log::Shiras::Unhide qw( :debug :InternaLBuilDInstancE );
+###LogSD	use Log::Shiras::Switchboard;#
 ###LogSD	my	$operator = Log::Shiras::Switchboard->get_operator(
 ###LogSD						name_space_bounds =>{
 ###LogSD							UNBLOCK =>{

@@ -10,10 +10,15 @@ Uses the change tracking convention
 	
 	* Another cool change
 
+v1.44.2   2016-08-16 19:11:16-07:00 America/Los_Angeles
+	
+	! Removed the direct call to Log::Shiras::Switchboard since I couldn't solve the recursive inheritance fails
+		use Log::Shiras::TapWarn to feed internal stuff to logs
+
 v1.42.0   2016-08-12 13:12:42-07:00 America/Los_Angeles
 
 	+ Updated the module ::BuildInstance to have new targeted Log::Shiras debug lines
-	+ Removed the UnhideDebug module in favor of the improved one in Log::Shiras (soon to be released)
+	+ Removed the UnhideDebug module in favor of the '~::Unhide' in Log::Shiras (soon to be released)
 
 v1.40.2   2016-05-01 09:41:57-07:00 America/Los_Angeles
 	
